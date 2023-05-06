@@ -56,7 +56,8 @@
 masses, and other quantities, like matrix elements of local operators,
 that have an anomalous dimension.
 The module also provides tools for manipulating and evolving perturbation series.
-The coupling and quark-mass values used in the examples are from lattice QCD (….).</p>
+The coupling and quark-mass values used in the examples are from
+lattice QCD (<a class="reference external" href="https://arxiv.org/pdf/1408.4169.pdf">arXiv:1408.4169</a>).</p>
 <section id="qcd-running-coupling">
 <h2>QCD Running Coupling<a class="headerlink" href="#qcd-running-coupling" title="Permalink to this headline">¶</a></h2>
 <p>A QCD coupling is created by specifying its value <code class="docutils literal notranslate"><span class="pre">alpha0</span></code> at some
@@ -93,23 +94,25 @@ see the documentation
 for <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code> for further information.</p>
 <p>Heavy-quark flavors can be added or subtracted to create new couplings:
 for example,</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">al5</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="n">add_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;4.164(23)&#39;</span><span class="p">)</span>           <span class="c1"># mb(mb, nf=5)&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al5</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="n">add_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="n">mb</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mb</span><span class="p">)</span>     <span class="c1"># add b to vac. polarization (nf=5)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al5</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
-<span class="go">0.08696(40)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">al3</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="n">del_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">0.08692(39)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0.9851(63)&#39;</span><span class="p">)</span>          <span class="c1"># mc(3., nf=4)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al3</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="n">del_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="n">mc</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>      <span class="c1"># delete c from vac. polarization (nf=3)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al3</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
-<span class="go">0.07745(30)</span>
+<span class="go">0.07640(29)</span>
 </pre></div>
 </div>
-<p>creates a 5-flavor coupling <code class="docutils literal notranslate"><span class="pre">al5</span></code> by adding a quark whose 5-flavor
-mass  is <code class="docutils literal notranslate"><span class="pre">m=4</span></code> at <code class="docutils literal notranslate"><span class="pre">mu=4</span></code>, and a 3-flavor coupling by adding a quark
-whose 4-flavor mass is <code class="docutils literal notranslate"><span class="pre">m=4</span></code> at <code class="docutils literal notranslate"><span class="pre">mu=4</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">del_quark</span></code> undoes
+<p>creates a 5-flavor coupling <code class="docutils literal notranslate"><span class="pre">al5</span></code> by adding a b-quark whose 5-flavor
+mass  is <code class="docutils literal notranslate"><span class="pre">mb</span></code> at <code class="docutils literal notranslate"><span class="pre">mu=mb</span></code>, and a 3-flavor coupling by deleting a c-quark
+whose 4-flavor mass is <code class="docutils literal notranslate"><span class="pre">mc</span></code> at <code class="docutils literal notranslate"><span class="pre">mu=3</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">del_quark</span></code> undoes
 <code class="docutils literal notranslate"><span class="pre">add_quark</span></code> and vice versa:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_al</span> <span class="o">=</span> <span class="n">al5</span><span class="o">.</span><span class="n">del_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">new_al</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_al</span> <span class="o">=</span> <span class="n">al5</span><span class="o">.</span><span class="n">del_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="n">mb</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mb</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_al</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>                       <span class="c1"># compare al(1000) above</span>
 <span class="go">0.08191(34)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">new_al</span> <span class="o">=</span> <span class="n">al3</span><span class="o">.</span><span class="n">add_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">new_al</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_al</span> <span class="o">=</span> <span class="n">al3</span><span class="o">.</span><span class="n">add_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="n">mc</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_al</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>                       <span class="c1"># compare al(1000) above</span>
 <span class="go">0.08191(34)</span>
 </pre></div>
 </div>
@@ -123,45 +126,53 @@ at some scale <code class="docutils literal notranslate"><span class="pre">mu0</
 example,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">4.513</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="go">4.513</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-<span class="go">2.463676027205009</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">])</span>
-<span class="go">array([6.56159841, 4.07833966, 2.46367603])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">0.9851</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">0.9851</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="go">0.5377724915576455</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">])</span>
+<span class="go">array([1.43226913, 0.89022211, 0.53777249])</span>
 </pre></div>
 </div>
-<p>defines a b-quark mass in a theory with <code class="docutils literal notranslate"><span class="pre">nf=4</span></code> light-quark flavors (u,d,s,c),
-where the value at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code> is given by <code class="docutils literal notranslate"><span class="pre">mb(mu)</span></code>.</p>
+<p>defines a c-quark mass in a theory with <code class="docutils literal notranslate"><span class="pre">nf=4</span></code> light-quark flavors (u,d,s,c),
+where the value at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code> is given by <code class="docutils literal notranslate"><span class="pre">mc(mu)</span></code>.</p>
 <p>The scale can be replaced by a string containing an arithmetic expression involving
-the mass. For example, <code class="docutils literal notranslate"><span class="pre">mb('m')</span></code> chooses a scale such that <code class="docutils literal notranslate"><span class="pre">mu=mb(mu)</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>                 <span class="c1"># mu = mb(mu)</span>
-<span class="go">4.209031231384643</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="s1">&#39;2*m&#39;</span><span class="p">)</span>               <span class="c1"># mu = 2 * mb(mu)</span>
-<span class="go">3.807878006121742</span>
+the mass. For example, <code class="docutils literal notranslate"><span class="pre">mc('m')</span></code> chooses a scale such that <code class="docutils literal notranslate"><span class="pre">mu=mc(mu)</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>                 <span class="c1"># mu = mc(mu)</span>
+<span class="go">1.2737719860674563</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="s1">&#39;3*m&#39;</span><span class="p">)</span>               <span class="c1"># mu = 3 * mc(mu)</span>
+<span class="go">0.9878145926947802</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">mc</span><span class="p">(</span><span class="s1">&#39;3*m&#39;</span><span class="p">))</span>       <span class="c1"># mu = 3 * mc(mu)</span>
+<span class="go">0.9878145927281744</span>
 </pre></div>
 </div>
 <p>Again, uncertainties can be introduced by making <code class="docutils literal notranslate"><span class="pre">m0</span></code> a Gaussian random variable
 using the <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code> module:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0.2128(25)&#39;</span><span class="p">),</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;4.513(26)&#39;</span><span class="p">),</span> <span class="n">mu0</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
-<span class="go">2.464(21)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">gvar</span> <span class="k">as</span> <span class="nn">gv</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0.2128(25)&#39;</span><span class="p">),</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0.9851(63)&#39;</span><span class="p">),</span> <span class="n">mu0</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
+<span class="go">0.5378(48)</span>
 </pre></div>
 </div>
-<p>where now the uncertainty in <code class="docutils literal notranslate"><span class="pre">mb(1000)</span></code> comes from both the coupling and the
+<p>where now the uncertainty in <code class="docutils literal notranslate"><span class="pre">mc(1000)</span></code> comes from both the coupling and the
 initial mass.</p>
-<p>The b-quark masses above are for a theory with <code class="docutils literal notranslate"><span class="pre">nf=4</span></code> flavors, which is useful at
+<p>The c-quark masses above are for a theory with <code class="docutils literal notranslate"><span class="pre">nf=4</span></code> flavors, which is useful at
 scales below the b-quark mass. At higher scales, however, the b quark should
 be included in the vacuum polarization. A new running mass with <code class="docutils literal notranslate"><span class="pre">nf=5</span></code> flavors can
 be created using <code class="xref py py-meth docutils literal notranslate"><span class="pre">M_msb.add_quark()</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb5</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">add_quark</span><span class="p">()</span>    <span class="c1"># add b to vac. polarization (nf=5)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb5</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-<span class="go">2.422(21)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;4.164(23)&#39;</span><span class="p">)</span>           <span class="c1"># mb(mb, nf=5)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc5</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">add_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="n">mb</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mb</span><span class="p">)</span>     <span class="c1"># add b to vac. polarization (nf=5)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc5</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="go">0.5286(48)</span>
 </pre></div>
 </div>
-<p>Again <code class="xref py py-meth docutils literal notranslate"><span class="pre">M_msb.del_quark()</span></code> undoes <code class="xref py py-meth docutils literal notranslate"><span class="pre">M_msb.add_quark()</span></code>, and vice versa.</p>
+<p>Again <code class="xref py py-meth docutils literal notranslate"><span class="pre">M_msb.del_quark()</span></code> undoes <code class="xref py py-meth docutils literal notranslate"><span class="pre">M_msb.add_quark()</span></code>, and vice versa:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mc5</span><span class="o">.</span><span class="n">del_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="n">mb</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mb</span><span class="p">)(</span><span class="mi">1000</span><span class="p">)</span>    <span class="c1"># compare mc(1000) above</span>
+<span class="go">0.5387(48)</span>
+</pre></div>
+</div>
 </section>
 <section id="operator-z-factors">
 <h2>Operator Z Factors<a class="headerlink" href="#operator-z-factors" title="Permalink to this headline">¶</a></h2>
@@ -169,7 +180,7 @@ be created using <code class="xref py py-meth docutils literal notranslate"><spa
 by multiplying by a <img class="math" src="_images/math/506db39905c5486ddbfecd159c18209b7bfd1ee5.svg" alt="Z(\mu)"/> factor where</p>
 <div class="math">
 <p><img src="_images/math/e20d6c267d2d7cddcdb99cf067477cce29fbf691.svg" alt="\mu^2\frac{d\ln{Z(\mu)}}{d\mu^2} = - \alpha_s(\mu)\sum_{n=0}^{N_\gamma} \gamma_n\, \alpha_s^n(\mu)"/></p>
-</div><p>where the right-hand side of this equation is the operator’s anomalous dimension. Such
+</div><p>where the <img class="math" src="_images/math/68f7b939affe8ed29ea6d38bed0776f9b29f504f.svg" alt="\gamma_n"/> on right-hand side specify the operator’s anomalous dimension. Such
 functions are represented in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> by objects of type <code class="xref py py-class docutils literal notranslate"><span class="pre">OPZ</span></code>: for example,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
@@ -225,6 +236,18 @@ rescaling parameter <img class="math" src="_images/math/086b00f827a9c2f2130b8e1a
 </section>
 <section id="qed-effects">
 <h2>QED Effects<a class="headerlink" href="#qed-effects" title="Permalink to this headline">¶</a></h2>
+<p>Leading-order QED corrections from the beta function and quark mass gamma function
+can be included in couplings and quark masses:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">alpha_qed</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">130</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">4.513</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here <code class="docutils literal notranslate"><span class="pre">alpha_qed</span></code> is the QED coupling and <code class="docutils literal notranslate"><span class="pre">Q</span></code> is the QED charge of the
+quark in units of the proton mass (the  sign is irrelevant). The running
+of the QED coupling is higher order and so is neglected here; <code class="docutils literal notranslate"><span class="pre">alpha_qed</span></code>
+should be set to a value of the running QED coupling appropriate to the
+scales of interest.</p>
 </section>
 <section id="power-series">
 <h2>Power Series<a class="headerlink" href="#power-series" title="Permalink to this headline">¶</a></h2>
@@ -235,9 +258,9 @@ example,</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ps</span> <span class="o">=</span> <span class="n">PowerSeries</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ps</span><span class="o">.</span><span class="n">c</span>
 <span class="go">array([1.  , 0.5 , 0.25, 0.  , 0.  , 0.  ])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ps</span><span class="p">(</span><span class="mf">.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ps</span><span class="p">(</span><span class="mf">.1</span><span class="p">)</span>                  <span class="c1"># series evaluated at x=0.1</span>
 <span class="go">1.0525</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">ps</span><span class="p">)</span><span class="o">.</span><span class="n">c</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">ps</span><span class="p">)</span><span class="o">.</span><span class="n">c</span>              <span class="c1"># coefficients of expansion of 1/ps</span>
 <span class="go">array([ 1.    , -0.5   ,  0.    ,  0.125 , -0.0625,  0.    ])</span>
 </pre></div>
 </div>
@@ -266,8 +289,8 @@ method:</p>
 </pre></div>
 </div>
 <p>Here <code class="docutils literal notranslate"><span class="pre">al_mu</span></code> is the perturbative expansion of <code class="docutils literal notranslate"><span class="pre">al(10)</span></code> in powers of <code class="docutils literal notranslate"><span class="pre">al(5.)</span></code>. The
-default order for such expansions is 25; it can be reset using
-<code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>. Although the QCD <img class="math" src="_images/math/dead8cf9fb3d84b5b1d439db22e492ee984d6b58.svg" alt="\beta"/> function in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>
+default order for such expansions is 25; it can be reset using parameter <code class="docutils literal notranslate"><span class="pre">order</span></code>
+(or using <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>). Although the QCD <img class="math" src="_images/math/dead8cf9fb3d84b5b1d439db22e492ee984d6b58.svg" alt="\beta"/> function in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>
 includes only 5 terms, we generally want to include many more terms in
 expansions from <code class="xref py py-meth docutils literal notranslate"><span class="pre">Alpha_s.ps()</span></code> in order to capture the leading
 logarithms from higher orders. (Note how the size of the coefficients grows with
@@ -293,20 +316,20 @@ same quantity but expressed in terms of <code class="docutils literal notranslat
 <span class="go">1.0950634481493524</span>
 </pre></div>
 </div>
-<p>Such manipulations are simplified by using <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.evol_ps()</span></code>:</p>
+<p>Such manipulations are simplified by using <a class="reference internal" href="qcdevol.html#qcdevol.evol_ps" title="qcdevol.evol_ps"><code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.evol_ps()</span></code></a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ps_5</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">evol_ps</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>gives the same result as above. (Note that <code class="docutils literal notranslate"><span class="pre">order=25</span></code> is specified so
 that results match with analysis above; absent this specification the
 order is taken from that of <code class="docutils literal notranslate"><span class="pre">ps</span></code> – i.e., <code class="docutils literal notranslate"><span class="pre">order=5</span></code>.)</p>
-<p>Note that <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.evol_ps()</span></code> also works for expansions describing
+<p>Note that <a class="reference internal" href="qcdevol.html#qcdevol.evol_ps" title="qcdevol.evol_ps"><code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.evol_ps()</span></code></a> also works for expansions describing
 quantities with an anomalous dimension (specified by
 parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code>):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zps</span> <span class="o">=</span> <span class="n">PowerSeries</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.125</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zps</span> <span class="o">=</span> <span class="n">PowerSeries</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.125</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span> <span class="c1"># power series in al(1)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">zps</span><span class="p">(</span><span class="n">al</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 <span class="go">1.2606196456987717</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">zps_mu</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">evol_ps</span><span class="p">(</span><span class="n">z_ps</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="p">[</span><span class="mf">.3</span><span class="p">,</span> <span class="mf">.1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zps_mu</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">evol_ps</span><span class="p">(</span><span class="n">zps</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="p">[</span><span class="mf">.3</span><span class="p">,</span> <span class="mf">.1</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">zps_mu</span><span class="o">.</span><span class="n">c</span>
 <span class="go">array([1.00000000e+00, 8.41116917e-02, 1.33399272e-01, 2.99767072e-01,</span>
 <span class="go">       5.68779314e-01, 1.17136230e+00, 2.46037314e+00, 5.19810496e+00,</span>
@@ -341,33 +364,48 @@ the impact of such uncertainties on results.</p>
 <p>The coupling, for example, typically has uncertainties due to the initial values
 (<code class="docutils literal notranslate"><span class="pre">alpha0</span></code>). One might also worry about errors associated due to the fact that only
 the first five terms of the beta function are included by <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>.  The impact
-of these errors on the coupling value at, say, the Z mass is easily measured by
-running the following code:</p>
+of such errors on the coupling value and a quark mass at, say, the Z mass is
+easily measured by running the following code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">gvar</span> <span class="k">as</span> <span class="nn">gv</span>
 <span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
 
-<span class="c1"># uncertainty due to initial value</span>
+<span class="c1"># uncertainty due to initial values</span>
 <span class="n">alpha0</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0.2128(25)&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;alpha0 =&#39;</span><span class="p">,</span> <span class="n">alpha0</span><span class="p">)</span>
+<span class="n">m0</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0.9851(63)&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;m0 =&#39;</span><span class="p">,</span> <span class="n">m0</span><span class="p">)</span>
+
+<span class="c1"># uncertainty due to running of alpha_qed</span>
+<span class="n">alpha_qed</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;130(5)&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;alpha_qed =&#39;</span><span class="p">,</span> <span class="n">alpha_qed</span><span class="p">)</span>
 
 <span class="c1"># uncertainty in mass of Z</span>
 <span class="n">Mz</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;91.1876(21)&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mz =&#39;</span><span class="p">,</span> <span class="n">Mz</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
 <span class="c1"># uncertainty due to higher-order term in beta function</span>
-<span class="n">bmsb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">BETA_MSB</span><span class="p">(</span><span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">bmsb_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">bmsb</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
-<span class="n">bmsb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">bmsb</span><span class="p">,</span> <span class="p">[</span><span class="n">bmsb_rms</span> <span class="o">*</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0(1)&#39;</span><span class="p">)]))</span>
+<span class="n">bmsb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">BETA_MSB</span><span class="p">(</span><span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">alpha_qed</span><span class="o">=</span><span class="n">alpha_qed</span><span class="p">,</span> <span class="n">terr</span><span class="o">=</span><span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0(1)&#39;</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;extended beta_msb =&#39;</span><span class="p">,</span> <span class="n">bmsb</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
+<span class="c1"># uncertainty due to higher-order terms in gamma function</span>
+<span class="n">gmsb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">GAMMA_MSB</span><span class="p">(</span><span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">alpha_qed</span><span class="o">=</span><span class="n">alpha_qed</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">terr</span><span class="o">=</span><span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0(1)&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;extended gamma_msb =&#39;</span><span class="p">,</span> <span class="n">gmsb</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
 <span class="c1"># create alpha with alph0 and extended beta_msb</span>
-<span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="n">alpha0</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">beta_msb</span><span class="o">=</span><span class="n">bmsb</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;al(Mz) =&#39;</span><span class="p">,</span> <span class="n">al</span><span class="p">(</span><span class="n">Mz</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="n">alpha0</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">alpha_qed</span><span class="o">=</span><span class="n">alpha_qed</span><span class="p">,</span> <span class="n">beta_msb</span><span class="o">=</span><span class="n">bmsb</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;al(Mz) =&#39;</span><span class="p">,</span> <span class="n">al</span><span class="p">(</span><span class="n">Mz</span><span class="p">))</span>
+
+<span class="c1"># create quark mass with m0 and extended gamma</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="n">m0</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">gamma_msb</span><span class="o">=</span><span class="n">gmsb</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;m(Mz) =&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">(</span><span class="n">Mz</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
 <span class="c1"># create error budget for al(Mz)</span>
-<span class="n">inputs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="n">alpha0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">bmsb</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">Mz</span><span class="o">=</span><span class="n">Mz</span><span class="p">)</span>
-<span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;al(Mz)&#39;</span><span class="p">:</span><span class="n">al</span><span class="p">(</span><span class="n">Mz</span><span class="p">)}</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">alpha0</span><span class="o">=</span><span class="n">alpha0</span><span class="p">,</span> <span class="n">m0</span><span class="o">=</span><span class="n">m0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">bmsb</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gmsb</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">Mz</span><span class="o">=</span><span class="n">Mz</span><span class="p">,</span> <span class="n">alpha_qed</span><span class="o">=</span><span class="n">alpha_qed</span>
+    <span class="p">)</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;al(Mz)&#39;</span><span class="p">:</span><span class="n">al</span><span class="p">(</span><span class="n">Mz</span><span class="p">),</span> <span class="s1">&#39;m(Mz)&#39;</span><span class="p">:</span><span class="n">m</span><span class="p">(</span><span class="n">Mz</span><span class="p">)}</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">gv</span><span class="o">.</span><span class="n">fmt_errorbudget</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">ndecimal</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -378,33 +416,42 @@ normally used by <a class="reference internal" href="qcdevol.html#module-qcdevol
 Running the
 code gives the following ouput:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">alpha0</span> <span class="o">=</span> <span class="mf">0.2128</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">m0</span> <span class="o">=</span> <span class="mf">0.9851</span><span class="p">(</span><span class="mi">63</span><span class="p">)</span>
+<span class="n">alpha_qed</span> <span class="o">=</span> <span class="mf">0.00769</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 <span class="n">Mz</span> <span class="o">=</span> <span class="mf">91.1876</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
 
-<span class="n">extended</span> <span class="n">beta_msb</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6631455962162306</span> <span class="mf">0.32507213085250036</span> <span class="mf">0.20477298034366223</span>
- <span class="mf">0.32222297343221057</span> <span class="mf">0.1860792072936385</span> <span class="mf">0.00</span><span class="p">(</span><span class="mi">38</span><span class="p">)]</span>
+<span class="n">extended</span> <span class="n">beta_msb</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6631455962162306</span> <span class="mf">0.3249639</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="mf">0.2047328</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="mf">0.32222297343221057</span>
+ <span class="mf">0.1860792072936385</span> <span class="mf">0.00</span><span class="p">(</span><span class="mi">38</span><span class="p">)]</span>
+
+<span class="n">extended</span> <span class="n">gamma_msb</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.31833154</span><span class="p">(</span><span class="mi">83</span><span class="p">)</span> <span class="mf">0.3702317</span><span class="p">(</span><span class="mi">49</span><span class="p">)</span> <span class="mf">0.3208073114884162</span> <span class="mf">0.2802914321897117</span>
+ <span class="mf">0.3646484366907343</span> <span class="mf">0.00</span><span class="p">(</span><span class="mi">33</span><span class="p">)]</span>
 
 <span class="n">al</span><span class="p">(</span><span class="n">Mz</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.11270</span><span class="p">(</span><span class="mi">66</span><span class="p">)</span>
+<span class="n">m</span><span class="p">(</span><span class="n">Mz</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.6325</span><span class="p">(</span><span class="mi">52</span><span class="p">)</span>
 
 <span class="n">Partial</span> <span class="o">%</span> <span class="n">Errors</span><span class="p">:</span>
-              <span class="n">al</span><span class="p">(</span><span class="n">Mz</span><span class="p">)</span>
-<span class="o">--------------------</span>
-   <span class="n">alpha0</span><span class="p">:</span>    <span class="mf">0.5869</span>
-     <span class="n">beta</span><span class="p">:</span>    <span class="mf">0.0027</span>
-       <span class="n">Mz</span><span class="p">:</span>    <span class="mf">0.0004</span>
-<span class="o">--------------------</span>
-    <span class="n">total</span><span class="p">:</span>    <span class="mf">0.5870</span>
+              <span class="n">al</span><span class="p">(</span><span class="n">Mz</span><span class="p">)</span>     <span class="n">m</span><span class="p">(</span><span class="n">Mz</span><span class="p">)</span>
+<span class="o">------------------------------</span>
+   <span class="n">alpha0</span><span class="p">:</span>    <span class="mf">0.5870</span>    <span class="mf">0.5245</span>
+       <span class="n">m0</span><span class="p">:</span>    <span class="mf">0.0000</span>    <span class="mf">0.6395</span>
+     <span class="n">beta</span><span class="p">:</span>    <span class="mf">0.0027</span>    <span class="mf">0.0006</span>
+    <span class="n">gamma</span><span class="p">:</span>    <span class="mf">0.0000</span>    <span class="mf">0.0094</span>
+       <span class="n">Mz</span><span class="p">:</span>    <span class="mf">0.0004</span>    <span class="mf">0.0002</span>
+<span class="n">alpha_qed</span><span class="p">:</span>    <span class="mf">0.0000</span>    <span class="mf">0.0056</span>
+<span class="o">------------------------------</span>
+    <span class="n">total</span><span class="p">:</span>    <span class="mf">0.5870</span>    <span class="mf">0.8272</span>
 </pre></div>
 </div>
-<p>This shows that <code class="docutils literal notranslate"><span class="pre">al(Mz)</span></code> has an uncertainty of 0.5870%, with 0.5869% coming from <code class="docutils literal notranslate"><span class="pre">alpha0</span></code>,
-0.0027% from the extended beta function, and 0.0004% from the Z mass. (The separate
-errors are added in quadrature to obtain the total error.) Truncating the
-beta function at five terms has negligible impact on the final error;
-and the uncertainty in the Z mass is even   less important.</p>
-<p>Note that the three lines of code
-defining <code class="docutils literal notranslate"><span class="pre">bmsb</span></code> could have been collapsed to the single statement</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bmsb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">BETA_MSB</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;0(1)&#39;</span><span class="p">))</span>
-</pre></div>
-</div>
+<p>This shows that <code class="docutils literal notranslate"><span class="pre">al(Mz)</span></code> has an uncertainty of 0.5870%, with 0.5870%
+coming from <code class="docutils literal notranslate"><span class="pre">alpha0</span></code>,
+0.0027% from the extended beta function, 0.0004% from the Z mass, and less than
+0.0001% from the QED coupling. (The separate
+errors are added in quadrature to obtain the total error.) The uncertainty in
+the quark mass <code class="docutils literal notranslate"><span class="pre">m(Mz)</span></code> is dominated by the uncertainties in initial values
+<code class="docutils literal notranslate"><span class="pre">alpha0</span></code> and <code class="docutils literal notranslate"><span class="pre">m0</span></code>. The QED coupling and the extended gamma function are
+next in importance, but negligible.
+Here uncertainties in the initial values are the
+only uncertainties that matter for both the coupling and mass.</p>
 </section>
 </section>
 

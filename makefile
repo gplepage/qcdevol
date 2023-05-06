@@ -5,7 +5,8 @@ PYTHON = python
 PYTHONVERSION = python`python -c 'import platform; print(platform.python_version())'`
 VERSION = `python -c 'import qcdevol; print qcdevol.__version__'`
 
-SRCFILES := $(shell ls setup.py src/qcdevol/qcdevol.py)
+SRCFILES := $(shell ls setup.py src/qcdevol/*.py)
+DOCFILES := $(shell ls doc/*.rst doc/conf.py)
 
 install-user :
 	$(PIP) install . --user
@@ -24,8 +25,11 @@ update:
 
 .PHONY : doc
 
-doc-html doc:
+doc/html/index.html : $(SRCFILES) $(DOCFILES)
 	sphinx-build -b html doc/ doc/html
+
+doc-html doc:
+	make doc/html/index.html
 
 clear-doc:
 	rm  -rf doc/html
@@ -41,6 +45,4 @@ coverage:
 sdist:          # source distribution
 	$(PYTHON) setup.py sdist
 
-clean :
-	rm -f -r build
-	rm -f *.so *.tmp *.pyc qcdevol.c
+

@@ -14,7 +14,8 @@ This module implements QCD  evolution equations for the coupling, quark
 masses, and other quantities, like matrix elements of local operators, 
 that have an anomalous dimension. 
 The module also provides tools for manipulating and evolving perturbation series.
-The coupling and quark-mass values used in the examples are from lattice QCD (....).
+The coupling and quark-mass values used in the examples are from 
+lattice QCD (`arXiv:1408.4169 <https://arxiv.org/pdf/1408.4169.pdf>`_).
 
 
 QCD Running Coupling
@@ -55,23 +56,25 @@ for :mod:`gvar` for further information.
 Heavy-quark flavors can be added or subtracted to create new couplings: 
 for example, ::
 
-    >>> al5 = al.add_quark(m=4, mu=4)
+    >>> mb = gv.gvar('4.164(23)')           # mb(mb, nf=5)')
+    >>> al5 = al.add_quark(m=mb, mu=mb)     # add b to vac. polarization (nf=5)
     >>> al5(1000.)
-    0.08696(40)
-    >>> al3 = al.del_quark(m=4, mu=4)
+    0.08692(39)
+    >>> mc = gv.gvar('0.9851(63)')          # mc(3., nf=4)
+    >>> al3 = al.del_quark(m=mc, mu=3)      # delete c from vac. polarization (nf=3)
     >>> al3(1000.)
-    0.07745(30)
+    0.07640(29)
 
-creates a 5-flavor coupling ``al5`` by adding a quark whose 5-flavor 
-mass  is ``m=4`` at ``mu=4``, and a 3-flavor coupling by adding a quark
-whose 4-flavor mass is ``m=4`` at ``mu=4``. Note that ``del_quark`` undoes
+creates a 5-flavor coupling ``al5`` by adding a b-quark whose 5-flavor 
+mass  is ``mb`` at ``mu=mb``, and a 3-flavor coupling by deleting a c-quark
+whose 4-flavor mass is ``mc`` at ``mu=3``. Note that ``del_quark`` undoes
 ``add_quark`` and vice versa:
 
-    >>> new_al = al5.del_quark(m=4, mu=4)
-    >>> new_al(1000.)
+    >>> new_al = al5.del_quark(m=mb, mu=mb)
+    >>> new_al(1000.)                       # compare al(1000) above
     0.08191(34)
-    >>> new_al = al3.add_quark(m=4, mu=4)
-    >>> new_al(1000.)
+    >>> new_al = al3.add_quark(m=mc, mu=3)
+    >>> new_al(1000.)                       # compare al(1000) above
     0.08191(34)
 
 The couplings here are all in the standard |msb| scheme. Other 
@@ -86,46 +89,53 @@ example, ::
 
     >>> import qcdevol as qcd
     >>> al = qcd.Alpha_s(alpha0=0.2128, mu0=5., nf=4)
-    >>> mb = qcd.M_msb(m0=4.513, mu0=3, alpha=al)
-    >>> mb(3)
-    4.513
-    >>> mb(1000)
-    2.463676027205009
-    >>> mb([1., 5., 1000.])
-    array([6.56159841, 4.07833966, 2.46367603])
+    >>> mc = qcd.M_msb(m0=0.9851, mu0=3., alpha=al)
+    >>> mc(3)
+    0.9851
+    >>> mc(1000)
+    0.5377724915576455
+    >>> mc([1., 5., 1000.])
+    array([1.43226913, 0.89022211, 0.53777249])
 
-defines a b-quark mass in a theory with ``nf=4`` light-quark flavors (u,d,s,c),
-where the value at scale ``mu`` is given by ``mb(mu)``. 
+defines a c-quark mass in a theory with ``nf=4`` light-quark flavors (u,d,s,c),
+where the value at scale ``mu`` is given by ``mc(mu)``. 
 
 The scale can be replaced by a string containing an arithmetic expression involving
-the mass. For example, ``mb('m')`` chooses a scale such that ``mu=mb(mu)``::
+the mass. For example, ``mc('m')`` chooses a scale such that ``mu=mc(mu)``::
 
-    >>> mb('m')                 # mu = mb(mu)
-    4.209031231384643
-    >>> mb('2*m')               # mu = 2 * mb(mu)
-    3.807878006121742
+    >>> mc('m')                 # mu = mc(mu)
+    1.2737719860674563
+    >>> mc('3*m')               # mu = 3 * mc(mu)
+    0.9878145926947802
+    >>> mc(3 * mc('3*m'))       # mu = 3 * mc(mu)
+    0.9878145927281744
 
 Again, uncertainties can be introduced by making ``m0`` a Gaussian random variable 
 using the :mod:`gvar` module::
 
+    >>> import gvar as gv
     >>> al = qcd.Alpha_s(alpha0=gv.gvar('0.2128(25)'), mu0=5., nf=4)
-    >>> mb = qcd.M_msb(m0=gv.gvar('4.513(26)'), mu0=3, alpha=al)
-    >>> mb(1000.)
-    2.464(21)
+    >>> mc = qcd.M_msb(m0=gv.gvar('0.9851(63)'), mu0=3, alpha=al)
+    >>> mc(1000.)
+    0.5378(48)
 
-where now the uncertainty in ``mb(1000)`` comes from both the coupling and the 
+where now the uncertainty in ``mc(1000)`` comes from both the coupling and the 
 initial mass.
 
-The b-quark masses above are for a theory with ``nf=4`` flavors, which is useful at 
+The c-quark masses above are for a theory with ``nf=4`` flavors, which is useful at 
 scales below the b-quark mass. At higher scales, however, the b |~| quark should 
 be included in the vacuum polarization. A new running mass with ``nf=5`` flavors can 
 be created using :meth:`M_msb.add_quark`::
 
-    >>> mb5 = mb.add_quark()    # add b to vac. polarization (nf=5)
-    >>> mb5(1000)
-    2.422(21)
+    >>> mb = gv.gvar('4.164(23)')           # mb(mb, nf=5)
+    >>> mc5 = mc.add_quark(m=mb, mu=mb)     # add b to vac. polarization (nf=5)
+    >>> mc5(1000)
+    0.5286(48)
 
-Again :meth:`M_msb.del_quark` undoes :meth:`M_msb.add_quark`, and vice versa.
+Again :meth:`M_msb.del_quark` undoes :meth:`M_msb.add_quark`, and vice versa::
+
+    >>> mc5.del_quark(m=mb, mu=mb)(1000)    # compare mc(1000) above
+    0.5387(48)
 
 
 Operator Z Factors
@@ -136,7 +146,7 @@ by multiplying by a |Zmu| factor where
 .. math::
     \mu^2\frac{d\ln{Z(\mu)}}{d\mu^2} = - \alpha_s(\mu)\sum_{n=0}^{N_\gamma} \gamma_n\, \alpha_s^n(\mu)
 
-where the right-hand side of this equation is the operator's anomalous dimension. Such 
+where the :math:`\gamma_n` on right-hand side specify the operator's anomalous dimension. Such 
 functions are represented in |qcdevol| by objects of type :class:`OPZ`: for example, ::
 
     >>> import qcdevol as qcd
@@ -198,6 +208,18 @@ Additional schemes can be added to the dictionary.
 
 QED Effects
 --------------
+Leading-order QED corrections from the beta function and quark mass gamma function
+can be included in couplings and quark masses::
+
+    >>> import qcdevol as qcd
+    >>> al = qcd.Alpha_s(alpha0=0.2128, mu0=5., nf=4, alpha_qed=1/130)
+    >>> m = qcd.M_msb(m0=4.513, mu0=3., alpha=al, Q=1/3)
+
+Here ``alpha_qed`` is the QED coupling and ``Q`` is the QED charge of the 
+quark in units of the proton mass (the  sign is irrelevant). The running 
+of the QED coupling is higher order and so is neglected here; ``alpha_qed`` 
+should be set to a value of the running QED coupling appropriate to the 
+scales of interest.
 
 Power Series
 -------------
@@ -209,9 +231,9 @@ example, ::
     >>> ps = PowerSeries([1, 0.5, 0.25], order=5)
     >>> ps.c
     array([1.  , 0.5 , 0.25, 0.  , 0.  , 0.  ])
-    >>> ps(.1)
+    >>> ps(.1)                  # series evaluated at x=0.1
     1.0525
-    >>> (1 / ps).c
+    >>> (1 / ps).c              # coefficients of expansion of 1/ps
     array([ 1.    , -0.5   ,  0.    ,  0.125 , -0.0625,  0.    ])
 
 creates a power series ``ps`` where ``ps(x)`` is ``1 + 0.5 * x + 0.25 * x**2``. The 
@@ -240,8 +262,8 @@ method::
     0.17484202878432245
 
 Here ``al_mu`` is the perturbative expansion of ``al(10)`` in powers of ``al(5.)``. The 
-default order for such expansions is |~| 25; it can be reset using 
-:func:`qcdevol.setdefaults`. Although the QCD :math:`\beta` function in |qcdevol| 
+default order for such expansions is |~| 25; it can be reset using parameter ``order``
+(or using :func:`qcdevol.setdefaults`). Although the QCD :math:`\beta` function in |qcdevol| 
 includes only 5 |~| terms, we generally want to include many more terms in 
 expansions from :meth:`Alpha_s.ps` in order to capture the leading 
 logarithms from higher orders. (Note how the size of the coefficients grows with 
@@ -280,10 +302,10 @@ Note that :func:`qcdevol.evol_ps` also works for expansions describing
 quantities with an anomalous dimension (specified by 
 parameter ``gamma``)::
 
-    >>> zps = PowerSeries([1., .5, .125], order=25)
+    >>> zps = PowerSeries([1., .5, .125], order=25) # power series in al(1)
     >>> zps(al(1))
     1.2606196456987717
-    >>> zps_mu = qcd.evol_ps(z_ps, mu=2, mu0=1, nf=4, gamma=[.3, .1])
+    >>> zps_mu = qcd.evol_ps(zps, mu=2, mu0=1, nf=4, gamma=[.3, .1]) 
     >>> zps_mu.c 
     array([1.00000000e+00, 8.41116917e-02, 1.33399272e-01, 2.99767072e-01,
            5.68779314e-01, 1.17136230e+00, 2.46037314e+00, 5.19810496e+00,
@@ -318,34 +340,49 @@ the impact of such uncertainties on results.
 The coupling, for example, typically has uncertainties due to the initial values 
 (``alpha0``). One might also worry about errors associated due to the fact that only 
 the first five terms of the beta function are included by |qcdevol|.  The impact 
-of these errors on the coupling value at, say, the Z mass is easily measured by 
-running the following code::
+of such errors on the coupling value and a quark mass at, say, the Z mass is 
+easily measured by running the following code::
 
     import numpy as np
     import gvar as gv 
     import qcdevol as qcd 
 
-    # uncertainty due to initial value
+    # uncertainty due to initial values
     alpha0 = gv.gvar('0.2128(25)')
     print('alpha0 =', alpha0)
+    m0 = gv.gvar('0.9851(63)')
+    print('m0 =', m0)
+
+    # uncertainty due to running of alpha_qed 
+    alpha_qed = 1. / gv.gvar('130(5)')
+    print('alpha_qed =', alpha_qed)
 
     # uncertainty in mass of Z
     Mz = gv.gvar('91.1876(21)')
     print('Mz =', Mz, '\n')
 
     # uncertainty due to higher-order term in beta function
-    bmsb = qcd.BETA_MSB(nf=4)
-    bmsb_rms = np.average(bmsb ** 2) ** 0.5
-    bmsb = np.concatenate((bmsb, [bmsb_rms * gv.gvar('0(1)')]))
+    bmsb = qcd.BETA_MSB(nf=4, alpha_qed=alpha_qed, terr=gv.gvar('0(1)'))
     print('extended beta_msb =', bmsb, '\n')
 
+    # uncertainty due to higher-order terms in gamma function
+    gmsb = qcd.GAMMA_MSB(nf=4, alpha_qed=alpha_qed, Q=1/3, terr=gv.gvar('0(1)'))
+    print('extended gamma_msb =', gmsb, '\n')
+
     # create alpha with alph0 and extended beta_msb
-    al = qcd.Alpha_s(alpha0=alpha0, mu0=5., nf=4, beta_msb=bmsb)
-    print('al(Mz) =', al(Mz), '\n')
+    al = qcd.Alpha_s(alpha0=alpha0, mu0=5., nf=4, alpha_qed=alpha_qed, beta_msb=bmsb)
+    print('al(Mz) =', al(Mz))
+
+    # create quark mass with m0 and extended gamma 
+    m = qcd.M_msb(m0=m0, mu0=3., alpha=al, Q=1/3, gamma_msb=gmsb)
+    print('m(Mz) =', m(Mz), '\n')
 
     # create error budget for al(Mz)
-    inputs = dict(alpha0=alpha0, beta=bmsb[-1], Mz=Mz)
-    outputs = {'al(Mz)':al(Mz)}
+    inputs = dict(
+        alpha0=alpha0, m0=m0, beta=bmsb[-1], gamma=gmsb[-1], 
+        Mz=Mz, alpha_qed=alpha_qed
+        )
+    outputs = {'al(Mz)':al(Mz), 'm(Mz)':m(Mz)}
     print(gv.fmt_errorbudget(inputs=inputs, outputs=outputs, ndecimal=4))
 
 In addition to the uncertainty in ``alpha0``, we include uncertainty in 
@@ -356,29 +393,39 @@ Running the
 code gives the following ouput::
 
     alpha0 = 0.2128(25)
+    m0 = 0.9851(63)
+    alpha_qed = 0.00769(30)
     Mz = 91.1876(21) 
     
-    extended beta_msb = [0.6631455962162306 0.32507213085250036 0.20477298034366223
-     0.32222297343221057 0.1860792072936385 0.00(38)] 
+    extended beta_msb = [0.6631455962162306 0.3249639(42) 0.2047328(15) 0.32222297343221057
+     0.1860792072936385 0.00(38)] 
     
-    al(Mz) = 0.11270(66) 
+    extended gamma_msb = [0.31833154(83) 0.3702317(49) 0.3208073114884162 0.2802914321897117
+     0.3646484366907343 0.00(33)] 
+    
+    al(Mz) = 0.11270(66)
+    m(Mz) = 0.6325(52) 
     
     Partial % Errors:
-                  al(Mz)
-    --------------------
-       alpha0:    0.5869
-         beta:    0.0027
-           Mz:    0.0004
-    --------------------
-        total:    0.5870
-    
-This shows that ``al(Mz)`` has an uncertainty of 0.5870%, with 0.5869% coming from ``alpha0``,
-0.0027% from the extended beta function, and 0.0004% from the Z |~| mass. (The separate
-errors are added in quadrature to obtain the total error.) Truncating the 
-beta function at five terms has negligible impact on the final error; 
-and the uncertainty in the Z |~| mass is even   less important.
+                  al(Mz)     m(Mz)
+    ------------------------------
+       alpha0:    0.5870    0.5245
+           m0:    0.0000    0.6395
+         beta:    0.0027    0.0006
+        gamma:    0.0000    0.0094
+           Mz:    0.0004    0.0002
+    alpha_qed:    0.0000    0.0056
+    ------------------------------
+        total:    0.5870    0.8272
+        
 
-Note that the three lines of code 
-defining ``bmsb`` could have been collapsed to the single statement ::
-
-    bmsb = qcd.BETA_MSB(4, gv.gvar('0(1)'))
+This shows that ``al(Mz)`` has an uncertainty of 0.5870%, with 0.5870% 
+coming from ``alpha0``,
+0.0027% from the extended beta function, 0.0004% from the Z |~| mass, and less than
+0.0001% from the QED coupling. (The separate
+errors are added in quadrature to obtain the total error.) The uncertainty in 
+the quark mass ``m(Mz)`` is dominated by the uncertainties in initial values 
+``alpha0`` and ``m0``. The QED coupling and the extended gamma function are 
+next in importance, but negligible. 
+Here uncertainties in the initial values are the 
+only uncertainties that matter for both the coupling and mass.

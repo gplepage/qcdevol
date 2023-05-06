@@ -15,6 +15,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="qcdevol Module" href="qcdevol.html" />
     <link rel="prev" title="Overview and Tutorial" href="tutorial.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -30,6 +31,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qcdevol.html" title="qcdevol Module"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="tutorial.html" title="Overview and Tutorial"
              accesskey="P">previous</a> |</li>
@@ -53,7 +60,7 @@ is specified by the evolution equation,</p>
 <p><img src="_images/math/6d892c598d9f9d33a5a5c2a8c1db9405ca655c68.svg" alt="\mu^2\frac{d\alpha_s(\mu)}{d\mu^2} =
 -\alpha_s(\mu)^2\sum_{n=0}^{N_\beta}\beta_n\,\alpha_s^n(\mu),"/></p>
 </div><p>and an initial value <img class="math" src="_images/math/bc1043231c3afec83a6c8ea815b886a46e34d690.svg" alt="\alpha_s(\mu_0) = \alpha_0"/>.
-In <code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code>, <img class="math" src="_images/math/527e83cd9372f1caf2ff13ad273d22b8f31cfdee.svg" alt="N_\beta = 4"/> for the <img class="math" src="_images/math/f58b4164ff542789a150901426a8f79ebae73f14.svg" alt="\overline{\mathrm{MS}}"/> scheme; the coefficients
+In <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>, <img class="math" src="_images/math/527e83cd9372f1caf2ff13ad273d22b8f31cfdee.svg" alt="N_\beta = 4"/> for the <img class="math" src="_images/math/f58b4164ff542789a150901426a8f79ebae73f14.svg" alt="\overline{\mathrm{MS}}"/> scheme; the coefficients
 <img class="math" src="_images/math/554d855b81c69235d20dfbe8226b88081974e8b9.svg" alt="\beta_n"/> are given by <code class="docutils literal notranslate"><span class="pre">qcdevol.BETA_MSB(nf)</span></code>.</p>
 <p>While it is possible
 to integrate the evolution equation directly (see <code class="xref py py-meth docutils literal notranslate"><span class="pre">Alpha_s.exact()</span></code>),
@@ -73,7 +80,7 @@ the equivalent integrals,</p>
 d_2 = -\beta_2/\beta_0 + \beta_1^2/\beta_0^2
     \quad\quad\cdots"/></p>
 </div><p>and <img class="math" src="_images/math/d0209a9b297d00e8c7de77ecee02ae41cf69ed46.svg" alt="N_\alpha"/> is chosen large enough to give the desired
-accuracy. (By default <img class="math" src="_images/math/d58ce18c2cadffaafee252df426536644b3f5c5f.svg" alt="N_\alpha=25"/> in <code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> which is more
+accuracy. (By default <img class="math" src="_images/math/d58ce18c2cadffaafee252df426536644b3f5c5f.svg" alt="N_\alpha=25"/> in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> which is more
 than adequate for most purposes.) Evaluating the integrals and rearranging
 gives an equation,</p>
 <div class="math">
@@ -112,7 +119,7 @@ exact inverse of removing a quark.</p>
 <div class="math">
 <p><img src="_images/math/9b3f13cfd9d0b1641cb2b93417aad7b6818facbc.svg" alt="\mu^2 \frac{d\ln(m(\mu))}{d\mu^2} = - \alpha_s(\mu)\sum\limits_{n=0}^{N_\gamma}
 \gamma_n\,\alpha_s^n(\mu)"/></p>
-</div><p>with initial condition <img class="math" src="_images/math/6dfb8db079d60027a23e076c97d8bab3674e6fbd.svg" alt="m(\mu_0)=m_0"/>. In <code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code>, <img class="math" src="_images/math/da577646b6a6d2a8222f0f01be20745aef527af6.svg" alt="N_\gamma=4"/>;
+</div><p>with initial condition <img class="math" src="_images/math/6dfb8db079d60027a23e076c97d8bab3674e6fbd.svg" alt="m(\mu_0)=m_0"/>. In <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>, <img class="math" src="_images/math/da577646b6a6d2a8222f0f01be20745aef527af6.svg" alt="N_\gamma=4"/>;
 the coefficients <img class="math" src="_images/math/68f7b939affe8ed29ea6d38bed0776f9b29f504f.svg" alt="\gamma_n"/> are given by <code class="docutils literal notranslate"><span class="pre">qcdevol.GAMMA_MSB(nf)</span></code>.</p>
 <p>This equation also can be written as
 an integral</p>
@@ -167,6 +174,9 @@ series more generally) is done using the
   <h4>Previous topic</h4>
   <p class="topless"><a href="tutorial.html"
                         title="previous chapter">Overview and Tutorial</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qcdevol.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -194,6 +204,12 @@ series more generally) is done using the
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qcdevol.html" title="qcdevol Module"
+             >next</a> |</li>
         <li class="right" >
           <a href="tutorial.html" title="Overview and Tutorial"
              >previous</a> |</li>

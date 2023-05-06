@@ -1,0 +1,6 @@
+include makefile READ.rst INSTALLATION.txt COPYING MANIFEST.in CHANGES.TXT 
+include setup.py setup.cfg pyproject.toml src/qcdevol/*.py 
+graft doc/html
+graft tests 
+recursive-exclude tests/__pycache__ *
+recursive-exclude doc/_build *

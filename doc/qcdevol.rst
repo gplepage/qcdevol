@@ -39,7 +39,6 @@ the QCD coupling constant:
 
     |Alpha_s| objects have the  following methods:
 
-    Methods:
         .. automethod:: __call__(mu, scheme=None)
 
         .. automethod:: del_quark(m, mu=None, zeta=None)
@@ -62,7 +61,6 @@ following class represents such Z factors.
 
     :class:`qcdevol.OPZ` objects have the following methods:
 
-    Methods:
         .. automethod:: __call__(mu)
 
         .. automethod:: clone(mu0=None)
@@ -79,7 +77,6 @@ which are derived from :class:`qcdevol.OPZ`.
 
     :class:`qcdevol.M_msb` objects have the following methods:
 
-    Methods:
         .. automethod:: __call__(mu)
 
         .. automethod:: del_quark(m=None, mu=None, zeta=None)
