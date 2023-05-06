@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>qcdevol Module &#8212; qcdevol 4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pyramid.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Implementation" href="implementation.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="Implementation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> Module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="qcdevol-module">
+<h1><a class="reference internal" href="#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> Module<a class="headerlink" href="#qcdevol-module" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-qcdevol"></span><section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This module implements QCD evolution for coupling constants,
+masses, and operator-renomalization Z factors. These are
+described in detail below.</p>
+</section>
+<section id="qcd-coupling">
+<h2>QCD Coupling<a class="headerlink" href="#qcd-coupling" title="Permalink to this headline">¶</a></h2>
+<p>The central component of the <a class="reference internal" href="#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> package is the class that implements
+the QCD coupling constant:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qcdevol.Alpha_s">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">Alpha_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'msb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_qed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_msb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxalpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Running coupling in QCD.</p>
+<p>Typical usage is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                   <span class="c1"># coupling at 5 GeV</span>
+<span class="go">0.2128</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span><span class="p">(</span><span class="mf">91.2</span><span class="p">)</span>                <span class="c1"># coupling at 91.2 GeV</span>
+<span class="go">0.11269900754817504</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span><span class="p">([</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">91.2</span><span class="p">])</span>
+<span class="go">array([0.2128    , 0.11269901])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha0</strong> – Value of coupling at scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code>. This can be a number, or
+a variable of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.GVar</span></code> if the value has an
+uncertainty (see the documentation for <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code>).</p></li>
+<li><p><strong>mu0</strong> – Scale at which <code class="docutils literal notranslate"><span class="pre">self(mu0)</span> <span class="pre">==</span> <span class="pre">alpha0</span></code>.</p></li>
+<li><p><strong>nf</strong> (<em>int</em>) – Number of quark flavors included in vacuum polarization.</p></li>
+<li><p><strong>scheme</strong> (<em>str</em>) – Definition/scheme used for the coupling. By default this
+is either <code class="docutils literal notranslate"><span class="pre">'msb'</span></code> for the MSbar scheme or <code class="docutils literal notranslate"><span class="pre">'v'</span></code> for the
+scheme defined in terms of the static quark potential; but new
+schemes can be added to <code class="docutils literal notranslate"><span class="pre">qcdevol.SCHEMES</span></code>. Default is <code class="docutils literal notranslate"><span class="pre">'msb'</span></code>.</p></li>
+<li><p><strong>alpha_qed</strong> – QED coupling constant. If specified, the leading-order
+QED correction is added to the beta function. The running of
+the QED coupling is ignored in leading order; <code class="docutils literal notranslate"><span class="pre">alpha_qed</span></code>
+should be chosen to be appropriate for the range of scales
+of interest. Ignored if <code class="docutils literal notranslate"><span class="pre">alpha_qed=None</span></code> (default)
+or if parameter <code class="docutils literal notranslate"><span class="pre">beta_msb</span></code> is specified.</p></li>
+<li><p><strong>beta_msb</strong> (<em>array</em>) – Coefficients of the MSbar beta function. If specified
+these are used in place of what is returned by <a class="reference internal" href="#qcdevol.BETA_MSB" title="qcdevol.BETA_MSB"><code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.BETA_MSB()</span></code></a>.
+Ignored if <code class="docutils literal notranslate"><span class="pre">beta_msb=None</span></code> (default).</p></li>
+<li><p><strong>maxalpha</strong> (<em>float</em>) – Maximum value for alpha allowed in intermediate
+calculations, which are halted if it is exceeded. Default value
+is <code class="docutils literal notranslate"><span class="pre">maxalpha=1.</span></code>. Set <code class="docutils literal notranslate"><span class="pre">maxalpha=None</span></code> to have the maximum
+coupling calculated from the beta function.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em>) – Temporarily replaces the default <code class="docutils literal notranslate"><span class="pre">rtol</span></code> parameter;
+see <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>.</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – Temporarily replaces the default <code class="docutils literal notranslate"><span class="pre">order</span></code> parameter;
+see <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p><a class="reference internal" href="#qcdevol.Alpha_s" title="qcdevol.Alpha_s"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.Alpha_s</span></code></a> objects have the  following methods:</p>
+<dl>
+<dt>Methods:</dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.Alpha_s.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the coupling at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code>, which can be an array.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">scheme</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the coupling is evaluated in
+scheme <code class="docutils literal notranslate"><span class="pre">scheme</span></code>, otherwise the scheme specified when creating
+the coupling is used. (Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.Alpha_s.del_quark">
+<span class="sig-name descname"><span class="pre">del_quark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s.del_quark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new coupling by removing a heavy quark from the vac. polarization.</p>
+<p>Creates a new coupling with <code class="docutils literal notranslate"><span class="pre">self.nf-1</span></code> flavors by
+removing a quark whose <code class="docutils literal notranslate"><span class="pre">self.nf</span></code>-flavor mass is <code class="docutils literal notranslate"><span class="pre">m</span></code>
+at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code>. If <code class="docutils literal notranslate"><span class="pre">mu</span></code> is omitted (or <code class="docutils literal notranslate"><span class="pre">None</span></code>),
+it is set equal to <code class="docutils literal notranslate"><span class="pre">m</span></code>.</p>
+<p>The default <code class="docutils literal notranslate"><span class="pre">zeta</span></code> parameters (from
+<code class="docutils literal notranslate"><span class="pre">qcdevol.ZETA2_G_MSB(self.nf,</span> <span class="pre">m,</span> <span class="pre">mu)</span></code>) can be replaced by
+specifying array <code class="docutils literal notranslate"><span class="pre">zeta</span></code>. Ignored if <code class="docutils literal notranslate"><span class="pre">zeta=None</span></code> (default).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.Alpha_s.add_quark">
+<span class="sig-name descname"><span class="pre">add_quark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s.add_quark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new coupling by adding a heavy quark to the vac. polarization.</p>
+<p>Creates a new coupling with <code class="docutils literal notranslate"><span class="pre">self.nf+1</span></code> flavors by
+adding a quark whose <code class="docutils literal notranslate"><span class="pre">(self.nf+1)</span></code>-flavor mass is <code class="docutils literal notranslate"><span class="pre">m</span></code>
+at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code>. If <code class="docutils literal notranslate"><span class="pre">mu</span></code> is omitted (or <code class="docutils literal notranslate"><span class="pre">None</span></code>),
+it is set equal to <code class="docutils literal notranslate"><span class="pre">m</span></code>.</p>
+<p>The default <code class="docutils literal notranslate"><span class="pre">zeta</span></code> parameters (from
+<code class="docutils literal notranslate"><span class="pre">qcdevol.ZETA2_G_MSB(self.nf+1,</span> <span class="pre">m,</span> <span class="pre">mu)</span></code>) can be replaced by
+specifying array <code class="docutils literal notranslate"><span class="pre">zeta</span></code>. Ignored if <code class="docutils literal notranslate"><span class="pre">zeta=None</span></code> (default).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.Alpha_s.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create clone of <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
+<p>This method creates couplings that are equivalent to <code class="docutils literal notranslate"><span class="pre">self</span></code>
+but potentially in a different scheme or with a different
+normalization scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scheme</strong> (<em>str</em><em> or </em><em>None</em>) – Scheme used to define new coupling.
+Ignored if <code class="docutils literal notranslate"><span class="pre">scheme=None</span></code> (default).</p></li>
+<li><p><strong>mu0</strong> – New normalization scale for coupling.
+Ignored if <code class="docutils literal notranslate"><span class="pre">mu0=None</span></code> (default).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>New object of type <a class="reference internal" href="#qcdevol.Alpha_s" title="qcdevol.Alpha_s"><code class="xref py py-class docutils literal notranslate"><span class="pre">Alpha_s</span></code></a> equivalent to <code class="docutils literal notranslate"><span class="pre">self</span></code>
+but possibly in a different scheme (or with a different
+<code class="docutils literal notranslate"><span class="pre">mu0</span></code>).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.Alpha_s.ps">
+<span class="sig-name descname"><span class="pre">ps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s.ps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Power series for <code class="docutils literal notranslate"><span class="pre">self(mu)</span></code> in terms of <code class="docutils literal notranslate"><span class="pre">self(mu0)</span></code>.</p>
+<p>Returns a power series <code class="docutils literal notranslate"><span class="pre">ps</span></code> of order <code class="docutils literal notranslate"><span class="pre">order</span></code> and
+type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.powerseries.PowerSeries</span></code> such that
+such that <code class="docutils literal notranslate"><span class="pre">ps(self(mu0))</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">self(mu)</span></code> through
+the order specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mu</strong> – The expansion gives <code class="docutils literal notranslate"><span class="pre">self(mu)</span></code>. If <code class="docutils literal notranslate"><span class="pre">mu</span></code> is a tuple,
+<code class="docutils literal notranslate"><span class="pre">(mu,</span> <span class="pre">scheme)</span></code>, the expansion is for <code class="docutils literal notranslate"><span class="pre">self(*mu)</span></code>.</p></li>
+<li><p><strong>mu0</strong> – The expansion is in powers of <code class="docutils literal notranslate"><span class="pre">self(mu0)</span></code>. If <code class="docutils literal notranslate"><span class="pre">mu0</span></code>
+is a tuple, <code class="docutils literal notranslate"><span class="pre">(mu0,scheme0)</span></code>, the expansion is in
+powers of <code class="docutils literal notranslate"><span class="pre">self(*mu0)</span></code>.</p></li>
+<li><p><strong>order</strong> – The order to which the expansion is carried out.
+Leaving <code class="docutils literal notranslate"><span class="pre">order=None</span></code> (default) sets <code class="docutils literal notranslate"><span class="pre">order</span></code> equal
+to the default set by <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.Alpha_s.exact">
+<span class="sig-name descname"><span class="pre">exact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s.exact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as <code class="docutils literal notranslate"><span class="pre">Alpha_s.__call__</span></code> except it
+integrates differential evolution equation directly. It is much slower,
+and is only included for testing purposes.</p>
+</dd></dl>
+
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="operator-z-factors">
+<h2>Operator Z Factors<a class="headerlink" href="#operator-z-factors" title="Permalink to this headline">¶</a></h2>
+<p>Multiplying a local operator by its Z factor removes its scale dependence. The
+following class represents such Z factors.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qcdevol.OPZ">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">OPZ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.OPZ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Z factor for operator with anomalous dimenion gamma:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span> <span class="n">dlog</span><span class="p">(</span><span class="n">Z</span><span class="p">(</span><span class="n">mu</span><span class="p">))</span><span class="o">/</span><span class="n">dmu</span><span class="o">**</span><span class="mi">2</span> <span class="o">=</span> <span class="o">-</span> <span class="n">gammat</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">gamma</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span> <span class="o">+</span> <span class="o">....</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Typical usage is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">OPZ</span><span class="p">(</span><span class="n">z0</span><span class="o">=</span><span class="mf">4.</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">4.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="p">[</span><span class="mf">0.318</span><span class="p">,</span> <span class="mf">0.370</span><span class="p">,</span> <span class="mf">0.321</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span><span class="p">(</span><span class="mf">4.</span><span class="p">)</span>                   <span class="c1"># Z at mu = 4 GeV</span>
+<span class="go">4.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>                <span class="c1"># Z at mu = 1000 GeV</span>
+<span class="go">2.2907519504498515</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">])</span>
+<span class="go">array([5.74602581, 4.        , 2.38456863])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z0</strong> – Value of Z factor at scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code>. This can be a
+number, or a variable of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.GVar</span></code> if the
+value has an uncertainty (see the documentation for
+the <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code> module). <code class="docutils literal notranslate"><span class="pre">z0</span></code> can also be an
+array, representing multiple Z factors.</p></li>
+<li><p><strong>mu0</strong> – Scale at which <code class="docutils literal notranslate"><span class="pre">self(mu0)=z0</span></code>.</p></li>
+<li><p><strong>alpha</strong> – QCD coupling (type <a class="reference internal" href="#qcdevol.Alpha_s" title="qcdevol.Alpha_s"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.Alpha_s</span></code></a>) governing
+the Z factor’s evolution.</p></li>
+<li><p><strong>gamma</strong> – An array specifying the Z factor’s anomalous dimension.</p></li>
+<li><p><strong>gammat</strong> – Tree-level gamma. Set to zero if <code class="docutils literal notranslate"><span class="pre">gammat=None</span></code> (default).</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – Temporarily replaces the default <code class="docutils literal notranslate"><span class="pre">order</span></code> parameter;
+see <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em>) – Temporarily replaces the default <code class="docutils literal notranslate"><span class="pre">rtol</span></code> parameter;
+see <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p><a class="reference internal" href="#qcdevol.OPZ" title="qcdevol.OPZ"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.OPZ</span></code></a> objects have the following methods:</p>
+<dl>
+<dt>Methods:</dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.OPZ.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.OPZ.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Z factor at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code>, which may be an array.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">self.z0</span></code> and <code class="docutils literal notranslate"><span class="pre">mu</span></code> are both arrays, they must have the same
+shape as each element of <code class="docutils literal notranslate"><span class="pre">mu</span></code> is matched with the corresponding
+element of <code class="docutils literal notranslate"><span class="pre">self.z0</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.OPZ.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.OPZ.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create clone of <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">mu0</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, parameter <code class="docutils literal notranslate"><span class="pre">mu0</span></code> is reset
+in the clone (with the corresponding value for <code class="docutils literal notranslate"><span class="pre">z0</span></code>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.OPZ.exact">
+<span class="sig-name descname"><span class="pre">exact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.OPZ.exact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as <code class="docutils literal notranslate"><span class="pre">OPZ.__call__</span></code> except it integrates
+the differential evolution equation directly. It is much slower,
+and is only included for testing purposes. (Particularly
+inefficient if <code class="docutils literal notranslate"><span class="pre">self.z0</span></code> and <code class="docutils literal notranslate"><span class="pre">`mu</span></code> are both arrays.)</p>
+</dd></dl>
+
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="running-quark-masses">
+<h2>Running Quark Masses<a class="headerlink" href="#running-quark-masses" title="Permalink to this headline">¶</a></h2>
+<p>MSbar quark masses are represented by objects of type <a class="reference internal" href="#qcdevol.M_msb" title="qcdevol.M_msb"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.M_msb</span></code></a>,
+which are derived from <a class="reference internal" href="#qcdevol.OPZ" title="qcdevol.OPZ"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.OPZ</span></code></a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qcdevol.M_msb">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">M_msb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_msb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.M_msb" title="Permalink to this definition">¶</a></dt>
+<dd><p>MSbar quark masses.</p>
+<p>Typical usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">4.513</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                   <span class="c1"># mb at 3 GeV</span>
+<span class="go">4.513</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>               <span class="c1"># mb at 1000 GeV</span>
+<span class="go">2.463676027205009</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">])</span>
+<span class="go">array([6.56159841, 4.07833966, 2.46367603])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m0</strong> – Value of mass at scale mu0. This can be a number, or a
+variable of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.GVar</span></code> if the value has an
+uncertainty (see the documentation for the <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code> module).</p></li>
+<li><p><strong>mu0</strong> – Scale at which quark mass equals <code class="docutils literal notranslate"><span class="pre">m0</span></code>.</p></li>
+<li><p><strong>alpha</strong> – QCD coupling (type <a class="reference internal" href="#qcdevol.Alpha_s" title="qcdevol.Alpha_s"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.Alpha_s</span></code></a>) governing
+the mass’s evolution. Must be in the <code class="docutils literal notranslate"><span class="pre">'msb'</span></code> scheme.</p></li>
+<li><p><strong>gamma_msb</strong> (<em>array</em>) – Coefficients of the mass’s MSbar anomalous
+dimension. If specified, these are used in place of the
+values used by <a class="reference internal" href="#qcdevol.GAMMA_MSB" title="qcdevol.GAMMA_MSB"><code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.GAMMA_MSB()</span></code></a>. Ignored
+if <code class="docutils literal notranslate"><span class="pre">gamma_msb=None</span></code> (default).</p></li>
+<li><p><strong>Q</strong> – QED charge of quark in units of the proton charge. Ignored
+if <code class="docutils literal notranslate"><span class="pre">None</span></code> (default). When specified, <code class="docutils literal notranslate"><span class="pre">alpha</span></code> must
+also include QED corrections.</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – Temporarily replaces the default <code class="docutils literal notranslate"><span class="pre">order</span></code> parameter;
+see <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em>) – Temporarily replaces the default <code class="docutils literal notranslate"><span class="pre">rtol</span></code> parameter;
+see <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p><a class="reference internal" href="#qcdevol.M_msb" title="qcdevol.M_msb"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.M_msb</span></code></a> objects have the following methods:</p>
+<dl>
+<dt>Methods:</dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.M_msb.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.M_msb.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return mass’s value at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code>, which may be an array.</p>
+<p><code class="docutils literal notranslate"><span class="pre">mu</span></code> is typically a number but can also be a string containing
+an arithmetic expression involving parameter <code class="docutils literal notranslate"><span class="pre">m</span></code>. For example,</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">4.513</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>             <span class="c1"># mu = mb(mu)</span>
+<span class="go">4.231289159789313</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="s1">&#39;3*m&#39;</span><span class="p">)</span>           <span class="c1"># mu = 3*mb(mu)</span>
+<span class="go">3.674028791373564</span>
+</pre></div>
+</div>
+<p>calculates <code class="docutils literal notranslate"><span class="pre">mb(mu)</span></code> first for <code class="docutils literal notranslate"><span class="pre">mu=mb(mu)</span></code> and then for
+<code class="docutils literal notranslate"><span class="pre">mu=mb(3*mu)</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.M_msb.del_quark">
+<span class="sig-name descname"><span class="pre">del_quark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.M_msb.del_quark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new mass by removing a heavy quark from the vac. polarization.</p>
+<p>Creates a new mass with <code class="docutils literal notranslate"><span class="pre">nf-1</span></code> flavors by removing a
+quark whose <code class="docutils literal notranslate"><span class="pre">nf</span></code>-flavor mass is <code class="docutils literal notranslate"><span class="pre">m</span></code> at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code>, where <code class="docutils literal notranslate"><span class="pre">nf</span></code>
+equals <code class="docutils literal notranslate"><span class="pre">self.alpha.nf</span></code>. If mu is omitted (or None), it is set equal to m.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">m</span></code> is unspecified or <code class="docutils literal notranslate"><span class="pre">m=None</span></code>, the quark mass is
+specified by the running mass itself – that is, it removes
+itself from the vacuum polarization.</p>
+<p>The default zeta parameters (from qcdevol.ZETA_M_MSB(self.nf, m, mu))
+can be replaced by specifying array <code class="docutils literal notranslate"><span class="pre">zeta</span></code>. Ignored
+if <code class="docutils literal notranslate"><span class="pre">zeta=None</span></code> (default).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.M_msb.add_quark">
+<span class="sig-name descname"><span class="pre">add_quark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.M_msb.add_quark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new coupling by adding a heavy quark to the vac. polarization.</p>
+<p>Creates a new mass with <code class="docutils literal notranslate"><span class="pre">nf+1</span></code> flavors by adding a quark whose
+<code class="docutils literal notranslate"><span class="pre">(nf+1)</span></code>-flavor mass is m at scale mu, where <code class="docutils literal notranslate"><span class="pre">nf</span></code> equals
+<code class="docutils literal notranslate"><span class="pre">self.alpha.nf</span></code>. If mu is omitted (or None), it is set equal to m.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">m</span></code> is unspecified or <code class="docutils literal notranslate"><span class="pre">m=None</span></code>, the quark mass is
+specified by the running mass itself – that is, it adds
+itself to the vacuum polarization.</p>
+<p>The default zeta parameters (from <code class="docutils literal notranslate"><span class="pre">qcdevol.ZETA_M_MSB(nf+1,</span> <span class="pre">m,</span> <span class="pre">mu)</span></code>)
+can be replaced by specifying array <code class="docutils literal notranslate"><span class="pre">zeta</span></code>. Ignored
+if <code class="docutils literal notranslate"><span class="pre">zeta=None</span></code> (default).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcdevol.M_msb.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.M_msb.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create clone of <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">mu0</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, parameter <code class="docutils literal notranslate"><span class="pre">mu0</span></code> is reset
+in the clone (with the corresponding value for <code class="docutils literal notranslate"><span class="pre">m0</span></code>).</p>
+</dd></dl>
+
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>The following function is used to evolve and manipulate perturbation
+series:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qcdevol.evol_ps">
+<span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">evol_ps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pseries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_msb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.evol_ps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolve power series in <code class="docutils literal notranslate"><span class="pre">alpha</span></code> from scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code> to scale <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
+<p>Given a power series in coupling <code class="docutils literal notranslate"><span class="pre">alpha(mu0)</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">S</span><span class="p">(</span><span class="n">mu0</span><span class="p">)</span> <span class="o">=</span> <span class="n">sum_n</span><span class="o">=</span><span class="mf">0.</span><span class="o">.</span><span class="n">order</span> <span class="n">c_n</span><span class="p">(</span><span class="n">mu0</span><span class="p">)</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">(</span><span class="n">mu0</span><span class="p">)</span><span class="o">**</span><span class="n">n</span>
+</pre></div>
+</div>
+<p>this function calculates the coefficients <code class="docutils literal notranslate"><span class="pre">c_n(mu)</span></code> for the
+the expansion of <code class="docutils literal notranslate"><span class="pre">S(mu)</span></code> in powers of <code class="docutils literal notranslate"><span class="pre">alpha(mu)</span></code> where</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="o">/</span><span class="n">dt</span> <span class="n">ln</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="n">mu</span><span class="p">))</span>  <span class="o">=</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="n">sum_n</span><span class="o">=</span><span class="mf">0.</span><span class="o">.</span><span class="n">N</span> <span class="n">gamma</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="n">n</span>
+</pre></div>
+</div>
+<p>and <code class="docutils literal notranslate"><span class="pre">t=ln(mu**2)</span></code>. The new coefficients depend only on the
+coefficients of the original power series,  the ratio <code class="docutils literal notranslate"><span class="pre">mu/mu0</span></code>,
+the number <code class="docutils literal notranslate"><span class="pre">nf</span></code> of quark flavors included in the coupling
+and the coefficients <code class="docutils literal notranslate"><span class="pre">gamma[n]</span></code> of the anomalous dimension.
+The initial expansion <code class="docutils literal notranslate"><span class="pre">S(mu0)</span></code> is specified by <code class="docutils literal notranslate"><span class="pre">pseries</span></code> which
+is an object of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.powerseries.PowerSeries</span></code>
+(for more information, see the documentation for the <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code>
+module). The final power series <code class="docutils literal notranslate"><span class="pre">S(mu)</span></code> is returned as an
+object of the same type.</p>
+<p>Typical usage is</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">gvar</span> <span class="k">as</span> <span class="nn">gv</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z10</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">powerseries</span><span class="o">.</span><span class="n">PowerSeries</span><span class="p">([</span><span class="mf">4.</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Z10</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>            <span class="c1"># Z(10) coefficients</span>
+<span class="go">[4. 0. 0. 0. 0. 0.]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z12</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">evol_ps</span><span class="p">(</span><span class="n">Z10</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">12.</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="p">[</span><span class="mf">0.318</span><span class="p">,</span> <span class="mf">0.370</span><span class="p">,</span> <span class="mf">0.321</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Z12</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>            <span class="c1"># Z(12) coefficients</span>
+<span class="go">[ 4.         -0.46382604 -0.56885921 -0.56718909 -0.18133736  0.34568772]</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">Z12</span></code> is the expansion at <code class="docutils literal notranslate"><span class="pre">mu=12</span></code> of the quantity whose
+expansion at <code class="docutils literal notranslate"><span class="pre">mu0=10</span></code> is given by <code class="docutils literal notranslate"><span class="pre">Z10</span></code> and whose anomalous dimension
+is specified by <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pseries</strong> – Object of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.powerseries.PowerSeries</span></code>
+representing <code class="docutils literal notranslate"><span class="pre">S(mu0)</span></code>, a series in powers of <code class="docutils literal notranslate"><span class="pre">alpha(mu0)</span></code>
+with coefficients <code class="docutils literal notranslate"><span class="pre">pseries.c[n]</span></code>.</p></li>
+<li><p><strong>mu</strong> – Results returned for the series <code class="docutils literal notranslate"><span class="pre">S(mu)</span></code> in terms of <code class="docutils literal notranslate"><span class="pre">alpha(mu)</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">mu</span></code> is tuple <code class="docutils literal notranslate"><span class="pre">(mu,scheme)</span></code>, <code class="docutils literal notranslate"><span class="pre">S(mu)</span></code> is a series in
+powers of <code class="docutils literal notranslate"><span class="pre">alpha(mu,</span> <span class="pre">scheme)</span></code>. The MSbar scheme is assumed
+if <code class="docutils literal notranslate"><span class="pre">scheme</span></code> is not specified.</p></li>
+<li><p><strong>mu0</strong> – Parameter <code class="docutils literal notranslate"><span class="pre">pseries</span></code> gives the expansion of <code class="docutils literal notranslate"><span class="pre">S(mu0)</span></code> in
+powers of <code class="docutils literal notranslate"><span class="pre">alpha(mu0)</span></code>. If <code class="docutils literal notranslate"><span class="pre">mu0</span></code> is tuple <code class="docutils literal notranslate"><span class="pre">(mu0,scheme0)</span></code>.
+<code class="docutils literal notranslate"><span class="pre">S(mu0)</span></code> is a series in powers of <code class="docutils literal notranslate"><span class="pre">alpha(mu0,scheme0)</span></code>.
+The MSbar scheme is assumed if <code class="docutils literal notranslate"><span class="pre">scheme0</span></code> is not specified.</p></li>
+<li><p><strong>nf</strong> (<em>int</em>) – Number of quark flavors included in the coupling.</p></li>
+<li><p><strong>gamma</strong> (<em>array</em>) – Coefficients <code class="docutils literal notranslate"><span class="pre">gamma[n]</span></code> of the anomalous dimension.</p></li>
+<li><p><strong>beta_msb</strong> (<em>array</em><em> or </em><em>None</em>) – If not <code class="docutils literal notranslate"><span class="pre">None</span></code>, replaces the default
+MSbar beta function (from <a class="reference internal" href="#qcdevol.BETA_MSB" title="qcdevol.BETA_MSB"><code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.BETA_MSB()</span></code></a>). Ignored
+if <code class="docutils literal notranslate"><span class="pre">None</span></code> (default).</p></li>
+<li><p><strong>order</strong> – Order to which the expansion of <code class="docutils literal notranslate"><span class="pre">S(mu)</span></code> is carried.
+If <code class="docutils literal notranslate"><span class="pre">order=None</span></code>, <code class="docutils literal notranslate"><span class="pre">order</span></code> is set equal to <code class="docutils literal notranslate"><span class="pre">pseries.order</span></code>.
+Larger values should be chosen for <code class="docutils literal notranslate"><span class="pre">order</span></code> if the ratio
+<code class="docutils literal notranslate"><span class="pre">mu/mu0</span></code> is large, to capture contributions involving
+powers of large logarithms in high orders.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Power series for <code class="docutils literal notranslate"><span class="pre">S(mu)</span></code> in powers of <code class="docutils literal notranslate"><span class="pre">alpha(mu)</span></code>, an object of
+type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.powerseries.PowerSeries</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>The default parameters for the beta function, mass
+anomalous dimension, and matching formulas (adding and
+deleting quarks) are obtained from the following functions:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qcdevol.BETA_MSB">
+<span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">BETA_MSB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_qed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.BETA_MSB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute <code class="docutils literal notranslate"><span class="pre">b[n]</span></code> for the <code class="docutils literal notranslate"><span class="pre">nf</span></code>-flavor MSbar coupling <code class="docutils literal notranslate"><span class="pre">al</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span> <span class="n">dal</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span><span class="o">/</span><span class="n">dmu</span><span class="o">**</span><span class="mi">2</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">5</span> <span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">6</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">terr</span></code> (truncation error) is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, a sixth entry is
+added to <code class="docutils literal notranslate"><span class="pre">b</span></code> with <code class="docutils literal notranslate"><span class="pre">b[5]</span></code> equal to <code class="docutils literal notranslate"><span class="pre">terr</span></code> times the
+r.m.s. average of the other coefficients.
+Ignored if <code class="docutils literal notranslate"><span class="pre">terr=None</span></code> (default).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcdevol.GAMMA_MSB">
+<span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">GAMMA_MSB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_qed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.GAMMA_MSB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute <code class="docutils literal notranslate"><span class="pre">g[n]</span></code> for <code class="docutils literal notranslate"><span class="pre">nf</span></code>-flavor MSbar mass:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span> <span class="n">dlog</span><span class="p">(</span><span class="n">m</span><span class="p">(</span><span class="n">mu</span><span class="p">))</span><span class="o">/</span><span class="n">dmu</span><span class="o">**</span><span class="mi">2</span><span class="o">=</span>  <span class="o">-</span><span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">al</span> <span class="o">-</span> <span class="n">g</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">g</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">g</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="n">g</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="n">al</span><span class="o">**</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">al</span> <span class="pre">=</span> <span class="pre">alpha_msb(mu)</span></code>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">terr</span></code> (truncation error) is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, a sixth entry is
+added to <code class="docutils literal notranslate"><span class="pre">g</span></code> with <code class="docutils literal notranslate"><span class="pre">g[5]</span></code> equal to <code class="docutils literal notranslate"><span class="pre">terr</span></code> times
+the r.m.s. average of the other coefficients.
+Ignored if <code class="docutils literal notranslate"><span class="pre">terr=None</span></code> (default).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcdevol.ZETA2_G_MSB">
+<span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">ZETA2_G_MSB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.ZETA2_G_MSB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute <code class="docutils literal notranslate"><span class="pre">z[i]</span></code> for <code class="docutils literal notranslate"><span class="pre">nf</span></code> flavor MSbar <code class="docutils literal notranslate"><span class="pre">alpha</span></code> where:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+</pre></div>
+</div>
+<p>Here <code class="docutils literal notranslate"><span class="pre">m=mh(mu,nf)</span></code> is the MSbar for the quark flavor being removed.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">terr</span></code> is not none, a fifth entry is added to <code class="docutils literal notranslate"><span class="pre">z</span></code> with
+<code class="docutils literal notranslate"><span class="pre">z[4]</span></code> equal to <code class="docutils literal notranslate"><span class="pre">terr</span></code> times the r.m.s. average of the other
+coefficients.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcdevol.ZETA_M_MSB">
+<span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">ZETA_M_MSB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.ZETA_M_MSB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute <code class="docutils literal notranslate"><span class="pre">z[n]</span></code> for <code class="docutils literal notranslate"><span class="pre">nf</span></code> flavor MSbar mass <code class="docutils literal notranslate"><span class="pre">m</span></code> where:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">m</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+</pre></div>
+</div>
+<p>Here <code class="docutils literal notranslate"><span class="pre">m=mh(mu,nf)</span></code> is the MSbar mass for the quark flavor being removed.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">terr</span></code> is not none, a fourth entry is added to <code class="docutils literal notranslate"><span class="pre">z</span></code> with
+<code class="docutils literal notranslate"><span class="pre">z[3]</span></code> equal to <code class="docutils literal notranslate"><span class="pre">terr</span></code> times the r.m.s. average of the other
+coefficients.</p>
+</dd></dl>
+
+<p>The dictionary <code class="docutils literal notranslate"><span class="pre">qcd.SCHEMES</span></code> defines the coupling schemes
+available in <a class="reference internal" href="#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>. <code class="docutils literal notranslate"><span class="pre">qcd.SCHEMES[s](nf)</span></code> returns
+a tuple <code class="docutils literal notranslate"><span class="pre">(c,r)</span></code> where the coupling <code class="docutils literal notranslate"><span class="pre">als</span></code> in
+scheme <code class="docutils literal notranslate"><span class="pre">s</span></code> is related to the MSbar coupling <code class="docutils literal notranslate"><span class="pre">almsb</span></code>
+by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">als</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span> <span class="o">=</span> <span class="n">almsb</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">almsb</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">almsb</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The schemes currently available are: <code class="docutils literal notranslate"><span class="pre">s='msb'</span></code> for the MSbar
+scheme (default scheme for most functions), and <code class="docutils literal notranslate"><span class="pre">s='v'</span></code> or <code class="docutils literal notranslate"><span class="pre">s='V'</span></code>
+the static-quark potential coupling, defined by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">V</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span> <span class="n">pi</span> <span class="n">C_F</span> <span class="n">alv</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">/</span> <span class="n">Q</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>through third order in the coupling.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> Module</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#qcd-coupling">QCD Coupling</a></li>
+<li><a class="reference internal" href="#operator-z-factors">Operator Z Factors</a></li>
+<li><a class="reference internal" href="#running-quark-masses">Running Quark Masses</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="implementation.html"
+                        title="previous chapter">Implementation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/qcdevol.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="Implementation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> Module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, G. P. Lepage.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+  </body>
+</html>
