@@ -1,4 +1,4 @@
-include makefile READ.rst INSTALLATION.txt COPYING MANIFEST.in CHANGES.TXT 
+include makefile READ.rst INSTALLATION.txt COPYING MANIFEST.in CHANGES.txt LICENSE.txt
 include setup.py setup.cfg pyproject.toml src/qcdevol/*.py 
 graft doc/html
 graft tests 

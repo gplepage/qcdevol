@@ -1,0 +1,18 @@
+Version 4.0 ????
+=================
+- First version of qcdevol to be made public.
+
+- Substantial changes from previous versions which 
+  are largely incompatible with previous versions.
+  In particular the coupling and mass classes 
+  have new names and the parameter names are 
+  changed. The old names are included to 
+  help with legacy code (ie, Alphas 
+  instead of the new Alpha_s and Mmsb instead
+  of the new M_msb).
+
+- Algorithms are much faster now. Also the 
+  code is pure Python and included in its 
+  entirety in src/qcdevol/qcdevol.py.
+
+

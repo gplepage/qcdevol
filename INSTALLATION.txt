@@ -1,0 +1,30 @@
+To install:
+
+1. Use 'make install' to install in the system library (or use
+	'make install-user' to install in user's library.) Python modules
+	numpy and gvar are installed automatically if not present.
+
+	N.B. Rather than using make and the makefile, one can instead use
+	standard python installation tools: run 'pip install .' to install
+	to the system library (or 'pip install . --user' to install to
+	the user's directory) from within the top directory.
+
+
+2. (Optional) Run 'make tests' to test your installation of qcdevol.
+	The tests have been successful if the output ends with "OK".
+	
+	N.B. The tests can also be run directly using Python's unittest module:
+	"python -m unittest discover".
+
+
+To uninstall:
+
+1. 'make uninstall' uninstalls what was installed. It uses pip uninstall.
+
+
+Problems:
+
+	Contact Peter Lepage: g.p.lepage@cornell.edu
+
+
+
