@@ -56,7 +56,7 @@ for :mod:`gvar` for further information.
 Heavy-quark flavors can be added or subtracted to create new couplings: 
 for example, ::
 
-    >>> mb = gv.gvar('4.164(23)')           # mb(mb, nf=5)')
+    >>> mb = gv.gvar('4.164(23)')           # mb(mb, nf=5)
     >>> al5 = al.add_quark(m=mb, mu=mb)     # add b to vac. polarization (nf=5)
     >>> al5(1000.)
     0.08692(39)
@@ -101,7 +101,8 @@ defines a c-quark mass in a theory with ``nf=4`` light-quark flavors (u,d,s,c),
 where the value at scale ``mu`` is given by ``mc(mu)``. 
 
 The scale can be replaced by a string containing an arithmetic expression involving
-the mass. For example, ``mc('m')`` chooses a scale such that ``mu=mc(mu)``::
+the mass (represented by ``'m'``). For example, ``mc('m')`` chooses 
+a scale such that ``mu=mc(mu)``::
 
     >>> mc('m')                 # mu = mc(mu)
     1.2737719860674563
@@ -386,9 +387,10 @@ easily measured by running the following code::
     print(gv.fmt_errorbudget(inputs=inputs, outputs=outputs, ndecimal=4))
 
 In addition to the uncertainty in ``alpha0``, we include uncertainty in 
-the Z |~| mass, and we add a extra term 0.00±0.38 to the beta function, 
-beyond the ones 
-normally used by |qcdevol| (given by ``qcdevol.BETA_MSB(4)``). 
+the Z |~| mass, and we add a extra term 0.00±0.38 to the beta function (of order the root-mean-square of 
+the other coefficients), beyond the ones 
+normally used by |qcdevol| (given by ``qcdevol.BETA_MSB(4)``). Similarly
+we add an extra term 0.00±0.33 to the quark's gamma function.
 Running the 
 code gives the following ouput::
 

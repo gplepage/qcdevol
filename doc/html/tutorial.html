@@ -94,7 +94,7 @@ see the documentation
 for <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code> for further information.</p>
 <p>Heavy-quark flavors can be added or subtracted to create new couplings:
 for example,</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;4.164(23)&#39;</span><span class="p">)</span>           <span class="c1"># mb(mb, nf=5)&#39;)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">gvar</span><span class="p">(</span><span class="s1">&#39;4.164(23)&#39;</span><span class="p">)</span>           <span class="c1"># mb(mb, nf=5)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al5</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="n">add_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="n">mb</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mb</span><span class="p">)</span>     <span class="c1"># add b to vac. polarization (nf=5)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al5</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
 <span class="go">0.08692(39)</span>
@@ -138,7 +138,8 @@ example,</p>
 <p>defines a c-quark mass in a theory with <code class="docutils literal notranslate"><span class="pre">nf=4</span></code> light-quark flavors (u,d,s,c),
 where the value at scale <code class="docutils literal notranslate"><span class="pre">mu</span></code> is given by <code class="docutils literal notranslate"><span class="pre">mc(mu)</span></code>.</p>
 <p>The scale can be replaced by a string containing an arithmetic expression involving
-the mass. For example, <code class="docutils literal notranslate"><span class="pre">mc('m')</span></code> chooses a scale such that <code class="docutils literal notranslate"><span class="pre">mu=mc(mu)</span></code>:</p>
+the mass (represented by <code class="docutils literal notranslate"><span class="pre">'m'</span></code>). For example, <code class="docutils literal notranslate"><span class="pre">mc('m')</span></code> chooses
+a scale such that <code class="docutils literal notranslate"><span class="pre">mu=mc(mu)</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>                 <span class="c1"># mu = mc(mu)</span>
 <span class="go">1.2737719860674563</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="s1">&#39;3*m&#39;</span><span class="p">)</span>               <span class="c1"># mu = 3 * mc(mu)</span>
@@ -410,9 +411,10 @@ easily measured by running the following code:</p>
 </pre></div>
 </div>
 <p>In addition to the uncertainty in <code class="docutils literal notranslate"><span class="pre">alpha0</span></code>, we include uncertainty in
-the Z mass, and we add a extra term 0.00±0.38 to the beta function,
-beyond the ones
-normally used by <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> (given by <code class="docutils literal notranslate"><span class="pre">qcdevol.BETA_MSB(4)</span></code>).
+the Z mass, and we add a extra term 0.00±0.38 to the beta function (of order the root-mean-square of
+the other coefficients), beyond the ones
+normally used by <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> (given by <code class="docutils literal notranslate"><span class="pre">qcdevol.BETA_MSB(4)</span></code>). Similarly
+we add an extra term 0.00±0.33 to the quark’s gamma function.
 Running the
 code gives the following ouput:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">alpha0</span> <span class="o">=</span> <span class="mf">0.2128</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
