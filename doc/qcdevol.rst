@@ -20,19 +20,14 @@
 
 .. moduleauthor:: G. Peter Lepage <g.p.lepage@cornell.edu>
 
-.. module:: qcdevol
-     :synopsis: QCD evolution for masses and couplings
-
 Introduction
---------------
-This module implements QCD evolution for coupling constants,
-masses, and operator-renomalization Z |~| factors. These are
-described in detail below.
-
+-----------------
+.. automodule:: qcdevol
+   :synopsis: Evolution  of QCD couplings, masses and other renormalization parameters.
 
 QCD Coupling
 --------------
-The central component of the |qcdevol| package is the class that implements 
+The central  component of the |qcdevol| package is the class that implements 
 the QCD coupling constant:
 
 .. autoclass:: qcdevol.Alpha_s 

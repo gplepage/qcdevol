@@ -1,8 +1,20 @@
-"""
-This module implements evolution equations for the coupling constant and 
-operator expectation values in QCD.
+# This module implements evolution equations for the coupling constant and 
+# operator expectation values in QCD.
 
-"""
+#     Copyright (C) 2023 G. Peter Lepage
+
+#     This program is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+
+#     This program is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU General Public License for more details.
+
+#     You should have received a copy of the GNU General Public License
+#     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import warnings
 import numpy
@@ -635,7 +647,8 @@ class OPZ:
             else:
                 # very inefficient but used only for testing
                 if self.z0.shape != mu.shape:
-                    raise ValueError(f'z0 and mu shapes different: {self.z0.shape} != {mu.shape}')
+                    # raise ValueError(f'z0 and mu shapes different: {self.z0.shape} != {mu.shape}')
+                    raise ValueError('z0 and mu shapes different: {} != {}'.format(self.z0.shape, mu.shape))
                 for i, mu_n in enumerate(mu.flat):
                     ans.append(self.exact(mu_n)[i])
             return numpy.array(ans).reshape(mu.shape)
@@ -695,13 +708,13 @@ class M_msb(OPZ):
 
         >>> import qcdevol as qcd
         >>> al = qcd.Alpha_s(alpha0=0.2128, mu0=5., nf=4)
-        >>> mb = qcd.M_msb(m0=4.513, mu0=3., alpha=al)
-        >>> mb(3)                   # mb at 3 GeV
-        4.513
-        >>> mb(1000.)               # mb at 1000 GeV
-        2.463676027205009
-        >>> mb([1., 3., 1000.])
-        array([6.56159841, 4.07833966, 2.46367603])
+        >>> mc = qcd.M_msb(m0=0.9851, mu0=3., alpha=al)
+        >>> mc(3)                   # mc at 3 GeV
+        0.9851
+        >>> mc(1000.)               # mc at 1000 GeV
+        0.5377724915576455
+        >>> mc([1., 3., 1000.])
+        array([1.43226913, 0.9851    , 0.53777249])
 
     Args:
         m0: Value of mass at scale mu0. This can be a number, or a 

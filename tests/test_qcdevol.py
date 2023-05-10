@@ -436,7 +436,7 @@ class test_qcdevol(unittest.TestCase):
             al_s = qcd.evol_ps(al_msb, mu=(1.,s), mu0=(r, 'msb'), nf=nf)
             assert_allclose(al_s.c, al.c, atol=1e-9)
             if len(c) == 0:
-                assert_allclose(al_msb[2:], 0, atol=1e-9)
+                assert_allclose(al_msb.c[2:], 0, atol=1e-9)
             else:
                 assert_allclose(al_msb.c[2:len(c) + 2], c)
 

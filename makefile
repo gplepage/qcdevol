@@ -5,16 +5,14 @@ PYTHON = python
 PYTHONVERSION = python`python -c 'import platform; print(platform.python_version())'`
 VERSION = `python -c 'import qcdevol; print qcdevol.__version__'`
 
-SRCFILES := $(shell ls setup.py src/qcdevol/*.py)
+SRCFILES := $(shell ls setup.py pyproject.toml src/qcdevol/*.py)
 DOCFILES := $(shell ls doc/*.rst doc/conf.py)
 
 install-user :
-	$(PIP) install . --user
+	$(PIP) install . --user --no-cache-dir
 
 install install-sys :
-	$(PIP) install .
-
-# $(PYTHON) setup.py install --record files-qcdevol.$(PYTHONVERSION)
+	$(PIP) install . --no-cache-dir
 
 uninstall :			# mostly works (may leave some empty directories)
 	$(PIP) uninstall qcdevol
@@ -43,6 +41,6 @@ coverage:
 	pytest --cov-report term-missing --cov=qcdevol tests/
 
 sdist:          # source distribution
-	$(PYTHON) setup.py sdist
+	$(PYTHON) -m build --sdist
 
 

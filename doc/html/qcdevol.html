@@ -47,16 +47,26 @@
           <div class="body" role="main">
             
   <section id="qcdevol-module">
-<h1><a class="reference internal" href="#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> Module<a class="headerlink" href="#qcdevol-module" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-qcdevol"></span><section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>This module implements QCD evolution for coupling constants,
-masses, and operator-renomalization Z factors. These are
-described in detail below.</p>
+<h1><a class="reference internal" href="#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> Module<a class="headerlink" href="#qcdevol-module" title="Permalink to this headline">¶</a></h1>
+<section id="module-qcdevol">
+<span id="introduction"></span><h2>Introduction<a class="headerlink" href="#module-qcdevol" title="Permalink to this headline">¶</a></h2>
+<p>This package provides tools for evolving QCD couplings, masses and other
+renormalization parameters. Typical usage is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>    <span class="c1"># coupling</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">0.9851</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>      <span class="c1"># c-quark mass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span><span class="p">(</span><span class="mf">91.2</span><span class="p">),</span> <span class="n">mc</span><span class="p">(</span><span class="mf">91.2</span><span class="p">)</span>                              <span class="c1"># run to mu=91.2 GeV</span>
+<span class="go">(0.11269900754817504, 0.6333892033863693)</span>
+</pre></div>
+</div>
+<p>Uncertainties can be introduced into parameters using the <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code>
+module, and these are propagated through the evolution. QED effects
+can be included. There are also tools for manipulating and evolving
+perturbation series (in alpha_s).</p>
 </section>
 <section id="qcd-coupling">
 <h2>QCD Coupling<a class="headerlink" href="#qcd-coupling" title="Permalink to this headline">¶</a></h2>
-<p>The central component of the <a class="reference internal" href="#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> package is the class that implements
+<p>The central  component of the <a class="reference internal" href="#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> package is the class that implements
 the QCD coupling constant:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcdevol.Alpha_s">
@@ -288,13 +298,13 @@ which are derived from <a class="reference internal" href="#qcdevol.OPZ" title="
 <p>Typical usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">4.513</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                   <span class="c1"># mb at 3 GeV</span>
-<span class="go">4.513</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>               <span class="c1"># mb at 1000 GeV</span>
-<span class="go">2.463676027205009</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">])</span>
-<span class="go">array([6.56159841, 4.07833966, 2.46367603])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">0.9851</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                   <span class="c1"># mc at 3 GeV</span>
+<span class="go">0.9851</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>               <span class="c1"># mc at 1000 GeV</span>
+<span class="go">0.5377724915576455</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">])</span>
+<span class="go">array([1.43226913, 0.9851    , 0.53777249])</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
@@ -515,7 +525,7 @@ coefficients.</p>
 </dd></dl>
 
 <p>The dictionary <code class="docutils literal notranslate"><span class="pre">qcd.SCHEMES</span></code> defines the coupling schemes
-available in <a class="reference internal" href="#module-qcdevol" title="qcdevol: QCD evolution for masses and couplings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>. <code class="docutils literal notranslate"><span class="pre">qcd.SCHEMES[s](nf)</span></code> returns
+available in <a class="reference internal" href="#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>. <code class="docutils literal notranslate"><span class="pre">qcd.SCHEMES[s](nf)</span></code> returns
 a tuple <code class="docutils literal notranslate"><span class="pre">(c,r)</span></code> where the coupling <code class="docutils literal notranslate"><span class="pre">als</span></code> in
 scheme <code class="docutils literal notranslate"><span class="pre">s</span></code> is related to the MSbar coupling <code class="docutils literal notranslate"><span class="pre">almsb</span></code>
 by:</p>
@@ -542,7 +552,7 @@ the static-quark potential coupling, defined by:</p>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> Module</a><ul>
-<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#module-qcdevol">Introduction</a></li>
 <li><a class="reference internal" href="#qcd-coupling">QCD Coupling</a></li>
 <li><a class="reference internal" href="#operator-z-factors">Operator Z Factors</a></li>
 <li><a class="reference internal" href="#running-quark-masses">Running Quark Masses</a></li>

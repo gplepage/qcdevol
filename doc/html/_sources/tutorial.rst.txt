@@ -57,11 +57,11 @@ Heavy-quark flavors can be added or subtracted to create new couplings:
 for example, ::
 
     >>> mb = gv.gvar('4.164(23)')           # mb(mb, nf=5)
-    >>> al5 = al.add_quark(m=mb, mu=mb)     # add b to vac. polarization (nf=5)
+    >>> al5 = al.add_quark(m=mb, mu=mb)     # add b to vac. polarization ==> nf=5
     >>> al5(1000.)
     0.08692(39)
     >>> mc = gv.gvar('0.9851(63)')          # mc(3., nf=4)
-    >>> al3 = al.del_quark(m=mc, mu=3)      # delete c from vac. polarization (nf=3)
+    >>> al3 = al.del_quark(m=mc, mu=3)      # delete c from vac. polarization ==> nf=3
     >>> al3(1000.)
     0.07640(29)
 
@@ -330,13 +330,14 @@ are needed when ``mu/mu0`` becomes large or small.
 
 More About Uncertainties
 ---------------------------
-As discussed above, parameters ``alpha0`` in :class:`Alpha_s` and 'm0' in :class:`M_msb` 
+As discussed above, parameters ``alpha0`` in :class:`Alpha_s` and ``m0`` in :class:`M_msb` 
 can be specified with uncertainties by replacing numbers with Gaussian random variables 
 (objects with a mean and standard deviation
 of type |gvar|). In fact almost any parameter in the classes and functions discussed
 above can be a |gvar|, and the associated uncertainties and correlations 
 are propagated through the various methods. This allows for a  comprehensive analysis of
-the impact of such uncertainties on results.
+the impact of such uncertainties on results. (It also means these objects can be used in 
+fit functions for nonlinear least squares fitting using the :mod:`lsqfit` module.)
 
 The coupling, for example, typically has uncertainties due to the initial values 
 (``alpha0``). One might also worry about errors associated due to the fact that only 
@@ -387,7 +388,8 @@ easily measured by running the following code::
     print(gv.fmt_errorbudget(inputs=inputs, outputs=outputs, ndecimal=4))
 
 In addition to the uncertainty in ``alpha0``, we include uncertainty in 
-the Z |~| mass, and we add a extra term 0.00±0.38 to the beta function (of order the root-mean-square of 
+the Z |~| mass, and we add a extra term 0.00±0.38 to the beta function 
+(of order the root-mean-square of 
 the other coefficients), beyond the ones 
 normally used by |qcdevol| (given by ``qcdevol.BETA_MSB(4)``). Similarly
 we add an extra term 0.00±0.33 to the quark's gamma function.
