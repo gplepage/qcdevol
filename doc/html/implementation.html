@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Implementation &#8212; qcdevol 4.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,6 +12,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -51,9 +52,9 @@
           <div class="body" role="main">
             
   <section id="implementation">
-<h1>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h1>
+<h1>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading">¶</a></h1>
 <section id="qcd-coupling">
-<h2>QCD Coupling<a class="headerlink" href="#qcd-coupling" title="Permalink to this headline">¶</a></h2>
+<h2>QCD Coupling<a class="headerlink" href="#qcd-coupling" title="Permalink to this heading">¶</a></h2>
 <p>The value of the QCD coupling <img class="math" src="_images/math/bb5a2a42ce393ce01cd6e1537f149b394c7bb722.svg" alt="\alpha_s(\mu)"/> at scale <img class="math" src="_images/math/28056de9533d6e7fcf76162a0a84ea5f66305f1f.svg" alt="\mu"/>
 is specified by the evolution equation,</p>
 <div class="math">
@@ -114,7 +115,7 @@ flavor by solving for <img class="math" src="_images/math/951f03fa920531ebdf2e82
 exact inverse of removing a quark.</p>
 </section>
 <section id="quark-mass">
-<h2>Quark Mass<a class="headerlink" href="#quark-mass" title="Permalink to this headline">¶</a></h2>
+<h2>Quark Mass<a class="headerlink" href="#quark-mass" title="Permalink to this heading">¶</a></h2>
 <p>The evolution of the <img class="math" src="_images/math/f58b4164ff542789a150901426a8f79ebae73f14.svg" alt="\overline{\mathrm{MS}}"/> mass <img class="math" src="_images/math/d90c7dc7411a259c09b1c911ea84d70107e20b8f.svg" alt="m(\mu)"/> is specified by</p>
 <div class="math">
 <p><img src="_images/math/9b3f13cfd9d0b1641cb2b93417aad7b6818facbc.svg" alt="\mu^2 \frac{d\ln(m(\mu))}{d\mu^2} = - \alpha_s(\mu)\sum\limits_{n=0}^{N_\gamma}
@@ -146,7 +147,7 @@ result for <img class="math" src="_images/math/d90c7dc7411a259c09b1c911ea84d7010
 analogously to the coupling.</p>
 </section>
 <section id="power-series">
-<h2>Power Series<a class="headerlink" href="#power-series" title="Permalink to this headline">¶</a></h2>
+<h2>Power Series<a class="headerlink" href="#power-series" title="Permalink to this heading">¶</a></h2>
 <p>Calculating parameters like the <img class="math" src="_images/math/a935b9e46f30a34b036b7f805281f2b8a428c598.svg" alt="d_n"/> above (and manipulating perturbation
 series more generally) is done using the
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar.powerseries</span></code> module:</p>
@@ -161,8 +162,9 @@ series more generally) is done using the
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Implementation</a><ul>
 <li><a class="reference internal" href="#qcd-coupling">QCD Coupling</a></li>
 <li><a class="reference internal" href="#quark-mass">Quark Mass</a></li>
@@ -171,12 +173,17 @@ series more generally) is done using the
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="tutorial.html"
-                        title="previous chapter">Overview and Tutorial</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="qcdevol.html"
-                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> Module</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="tutorial.html"
+                          title="previous chapter">Overview and Tutorial</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="qcdevol.html"
+                          title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> Module</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -193,7 +200,7 @@ series more generally) is done using the
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -219,7 +226,7 @@ series more generally) is done using the
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2023, G. P. Lepage.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>

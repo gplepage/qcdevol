@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>qcdevol Module &#8212; qcdevol 4.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,6 +12,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -47,9 +48,9 @@
           <div class="body" role="main">
             
   <section id="qcdevol-module">
-<h1><a class="reference internal" href="#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> Module<a class="headerlink" href="#qcdevol-module" title="Permalink to this headline">¶</a></h1>
+<h1><a class="reference internal" href="#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> Module<a class="headerlink" href="#qcdevol-module" title="Permalink to this heading">¶</a></h1>
 <section id="module-qcdevol">
-<span id="introduction"></span><h2>Introduction<a class="headerlink" href="#module-qcdevol" title="Permalink to this headline">¶</a></h2>
+<span id="introduction"></span><h2>Introduction<a class="headerlink" href="#module-qcdevol" title="Permalink to this heading">¶</a></h2>
 <p>This package provides tools for evolving QCD couplings, masses and other
 renormalization parameters. Typical usage is:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
@@ -65,12 +66,12 @@ can be included. There are also tools for manipulating and evolving
 perturbation series (in alpha_s).</p>
 </section>
 <section id="qcd-coupling">
-<h2>QCD Coupling<a class="headerlink" href="#qcd-coupling" title="Permalink to this headline">¶</a></h2>
+<h2>QCD Coupling<a class="headerlink" href="#qcd-coupling" title="Permalink to this heading">¶</a></h2>
 <p>The central  component of the <a class="reference internal" href="#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> package is the class that implements
 the QCD coupling constant:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcdevol.Alpha_s">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">Alpha_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'msb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_qed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_msb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxalpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">Alpha_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'msb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_qed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_msb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxalpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.Alpha_s" title="Permalink to this definition">¶</a></dt>
 <dd><p>Running coupling in QCD.</p>
 <p>Typical usage is:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
@@ -84,7 +85,7 @@ the QCD coupling constant:</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>alpha0</strong> – Value of coupling at scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code>. This can be a number, or
 a variable of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.GVar</span></code> if the value has an
@@ -160,7 +161,7 @@ specifying array <code class="docutils literal notranslate"><span class="pre">ze
 but potentially in a different scheme or with a different
 normalization scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>scheme</strong> (<em>str</em><em> or </em><em>None</em>) – Scheme used to define new coupling.
 Ignored if <code class="docutils literal notranslate"><span class="pre">scheme=None</span></code> (default).</p></li>
@@ -168,7 +169,7 @@ Ignored if <code class="docutils literal notranslate"><span class="pre">scheme=N
 Ignored if <code class="docutils literal notranslate"><span class="pre">mu0=None</span></code> (default).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>New object of type <a class="reference internal" href="#qcdevol.Alpha_s" title="qcdevol.Alpha_s"><code class="xref py py-class docutils literal notranslate"><span class="pre">Alpha_s</span></code></a> equivalent to <code class="docutils literal notranslate"><span class="pre">self</span></code>
 but possibly in a different scheme (or with a different
 <code class="docutils literal notranslate"><span class="pre">mu0</span></code>).</p>
@@ -185,7 +186,7 @@ type <code class="xref py py-class docutils literal notranslate"><span class="pr
 such that <code class="docutils literal notranslate"><span class="pre">ps(self(mu0))</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">self(mu)</span></code> through
 the order specified.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mu</strong> – The expansion gives <code class="docutils literal notranslate"><span class="pre">self(mu)</span></code>. If <code class="docutils literal notranslate"><span class="pre">mu</span></code> is a tuple,
 <code class="docutils literal notranslate"><span class="pre">(mu,</span> <span class="pre">scheme)</span></code>, the expansion is for <code class="docutils literal notranslate"><span class="pre">self(*mu)</span></code>.</p></li>
@@ -213,12 +214,12 @@ and is only included for testing purposes.</p>
 
 </section>
 <section id="operator-z-factors">
-<h2>Operator Z Factors<a class="headerlink" href="#operator-z-factors" title="Permalink to this headline">¶</a></h2>
+<h2>Operator Z Factors<a class="headerlink" href="#operator-z-factors" title="Permalink to this heading">¶</a></h2>
 <p>Multiplying a local operator by its Z factor removes its scale dependence. The
 following class represents such Z factors.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcdevol.OPZ">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">OPZ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.OPZ" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">OPZ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.OPZ" title="Permalink to this definition">¶</a></dt>
 <dd><p>Z factor for operator with anomalous dimenion gamma:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span> <span class="n">dlog</span><span class="p">(</span><span class="n">Z</span><span class="p">(</span><span class="n">mu</span><span class="p">))</span><span class="o">/</span><span class="n">dmu</span><span class="o">**</span><span class="mi">2</span> <span class="o">=</span> <span class="o">-</span> <span class="n">gammat</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">gamma</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span> <span class="o">+</span> <span class="o">....</span><span class="p">)</span>
 </pre></div>
@@ -236,7 +237,7 @@ following class represents such Z factors.</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>z0</strong> – Value of Z factor at scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code>. This can be a
 number, or a variable of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.GVar</span></code> if the
@@ -288,12 +289,12 @@ inefficient if <code class="docutils literal notranslate"><span class="pre">self
 
 </section>
 <section id="running-quark-masses">
-<h2>Running Quark Masses<a class="headerlink" href="#running-quark-masses" title="Permalink to this headline">¶</a></h2>
+<h2>Running Quark Masses<a class="headerlink" href="#running-quark-masses" title="Permalink to this heading">¶</a></h2>
 <p>MSbar quark masses are represented by objects of type <a class="reference internal" href="#qcdevol.M_msb" title="qcdevol.M_msb"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.M_msb</span></code></a>,
 which are derived from <a class="reference internal" href="#qcdevol.OPZ" title="qcdevol.OPZ"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcdevol.OPZ</span></code></a>.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcdevol.M_msb">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">M_msb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_msb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.M_msb" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcdevol.</span></span><span class="sig-name descname"><span class="pre">M_msb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_msb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qcdevol.M_msb" title="Permalink to this definition">¶</a></dt>
 <dd><p>MSbar quark masses.</p>
 <p>Typical usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
@@ -308,7 +309,7 @@ which are derived from <a class="reference internal" href="#qcdevol.OPZ" title="
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>m0</strong> – Value of mass at scale mu0. This can be a number, or a
 variable of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.GVar</span></code> if the value has an
@@ -392,7 +393,7 @@ in the clone (with the corresponding value for <code class="docutils literal not
 
 </section>
 <section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h2>
 <p>The following function is used to evolve and manipulate perturbation
 series:</p>
 <dl class="py function">
@@ -432,7 +433,7 @@ object of the same type.</p>
 expansion at <code class="docutils literal notranslate"><span class="pre">mu0=10</span></code> is given by <code class="docutils literal notranslate"><span class="pre">Z10</span></code> and whose anomalous dimension
 is specified by <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pseries</strong> – Object of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.powerseries.PowerSeries</span></code>
 representing <code class="docutils literal notranslate"><span class="pre">S(mu0)</span></code>, a series in powers of <code class="docutils literal notranslate"><span class="pre">alpha(mu0)</span></code>
@@ -457,7 +458,7 @@ Larger values should be chosen for <code class="docutils literal notranslate"><s
 powers of large logarithms in high orders.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Power series for <code class="docutils literal notranslate"><span class="pre">S(mu)</span></code> in powers of <code class="docutils literal notranslate"><span class="pre">alpha(mu)</span></code>, an object of
 type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.powerseries.PowerSeries</span></code>.</p>
 </dd>
@@ -549,8 +550,9 @@ the static-quark potential coupling, defined by:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code> Module</a><ul>
 <li><a class="reference internal" href="#module-qcdevol">Introduction</a></li>
 <li><a class="reference internal" href="#qcd-coupling">QCD Coupling</a></li>
@@ -561,9 +563,12 @@ the static-quark potential coupling, defined by:</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="implementation.html"
-                        title="previous chapter">Implementation</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="implementation.html"
+                          title="previous chapter">Implementation</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -580,7 +585,7 @@ the static-quark potential coupling, defined by:</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -603,7 +608,7 @@ the static-quark potential coupling, defined by:</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2023, G. P. Lepage.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>
