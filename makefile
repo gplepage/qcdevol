@@ -23,7 +23,7 @@ update:
 
 .PHONY : doc
 
-doc/html/index.html : $(SRCFILES) $(DOCFILES)
+doc/html/index.html : $(SRCFILES) $(DOCFILES) setup.cfg
 	sphinx-build -b html doc/ doc/html
 
 doc-html doc:
