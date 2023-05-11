@@ -5,6 +5,10 @@
 
 qcdevol Documentation
 ===================================
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.7920809.svg
+   :target: https://doi.org/10.5281/zenodo.7920809
+
+Contents:
 
 .. toctree::
    :maxdepth: 2

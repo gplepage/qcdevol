@@ -3,7 +3,7 @@
 PIP = python -m pip
 PYTHON = python
 PYTHONVERSION = python`python -c 'import platform; print(platform.python_version())'`
-VERSION = `python -c 'import qcdevol; print qcdevol.__version__'`
+VERSION = `python -c 'import qcdevol; print(qcdevol.__version__)'`
 
 SRCFILES := $(shell ls setup.py pyproject.toml src/qcdevol/*.py)
 DOCFILES := $(shell ls doc/*.rst doc/conf.py)
@@ -44,3 +44,21 @@ sdist:          # source distribution
 	$(PYTHON) -m build --sdist
 
 
+upload-twine: $(CYTHONFILES)
+	twine upload dist/qcdevol-$(VERSION).tar.gz
+
+upload-git: $(CYTHONFILES)
+	echo  "version $(VERSION)"
+	make doc-html
+	git diff --exit-code
+	git diff --cached --exit-code
+	git push origin master
+
+tag-git:
+	echo  "version $(VERSION)"
+	git tag -a v$(VERSION) -m "version $(VERSION)"
+	git push origin v$(VERSION)
+
+test-download:
+	-$(PIP) uninstall qcdevol
+	$(PIP) install qcdevol --no-cache-dir
