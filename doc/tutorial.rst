@@ -136,7 +136,7 @@ be created using :meth:`M_msb.add_quark`::
 Again :meth:`M_msb.del_quark` undoes :meth:`M_msb.add_quark`, and vice versa::
 
     >>> mc5.del_quark(m=mb, mu=mb)(1000)    # compare mc(1000) above
-    0.5387(48)
+    0.5378(48)
 
 
 Operator Z Factors
@@ -178,8 +178,10 @@ to switch between schemes. For example, ::
 defines a coupling in the V scheme but ``alv(5, 'msb')`` gives the value 
 of the corresponding |msb| coupling at ``mu=5``. The V scheme is defined 
 in terms of the static-quark potential and is particularly 
-useful when the renormalization scale is set using the BLM criterion (...ref...).
- 
+useful when the renormalization scale is set using the BLM criterion
+(`Phys. Rev. D28 (1983) 228 <https://doi.org/10.1103/PhysRevD.28.228>`_
+and `Phys. Rev. D 48 (1993) 2250 <https://arxiv.org/pdf/hep-lat/9209022.pdf>`_). 
+
 The coupling :math:`\alpha_s` in another scheme is specified in 
 terms of :math:`\alpha_\mathrm{\overline{MS}}`:
 

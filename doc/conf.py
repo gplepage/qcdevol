@@ -36,7 +36,7 @@ imgmath_use_preview = True
 imgmath_latex_preamble = r"\usepackage{arev}"
 #imgmath_dvipng_args = ['-gamma', '0.35', '-D', '110', '-bg', 'Transparent']
 # imgmath_dvisvgm_args = ['-TT 10cm,0.1cm']
-imgmath_font_size = 12
+imgmath_font_size = 11
 
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
@@ -69,11 +69,12 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
-# html_theme = 'sphinxdoc'
+# html_theme = 'alabaster'
+html_theme = 'sphinxdoc'
 # html_theme = 'nature'
-# html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme'
 html_theme = 'pyramid'
+# html_theme = 'agogo'
 
 
 # Add any paths that contain custom static files (such as style sheets) here,

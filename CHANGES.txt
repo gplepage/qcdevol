@@ -1,5 +1,9 @@
-Version 4.0 ????
-=================
+Version 4.0.2 2023-05-11
+========================
+Fixes .readthedocs.yaml so that online documentation works.
+
+Version 4.0 2023-05-09
+======================
 - First version of qcdevol to be made public.
 
 - Substantial changes from previous versions which 
