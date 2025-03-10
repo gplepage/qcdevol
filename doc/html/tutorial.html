@@ -1,19 +1,16 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Overview and Tutorial &#8212; qcdevol 4.0.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/pyramid.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
+    <title>Overview and Tutorial &#8212; qcdevol 4.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4848ba22" />
+    <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=310c80ee" />
+    <script src="_static/documentation_options.js?v=3b2dd2c4"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Implementation" href="implementation.html" />
@@ -41,7 +38,7 @@
         <li class="right" >
           <a href="index.html" title="qcdevol Documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Overview and Tutorial</a></li> 
       </ul>
     </div>  
@@ -52,7 +49,7 @@
           <div class="body" role="main">
             
   <section id="overview-and-tutorial">
-<h1>Overview and Tutorial<a class="headerlink" href="#overview-and-tutorial" title="Permalink to this heading">¶</a></h1>
+<h1>Overview and Tutorial<a class="headerlink" href="#overview-and-tutorial" title="Link to this heading">¶</a></h1>
 <p>This module implements QCD  evolution equations for the coupling, quark
 masses, and other quantities, like matrix elements of local operators,
 that have an anomalous dimension.
@@ -60,7 +57,7 @@ The module also provides tools for manipulating and evolving perturbation series
 The coupling and quark-mass values used in the examples are from
 lattice QCD (<a class="reference external" href="https://arxiv.org/pdf/1408.4169.pdf">arXiv:1408.4169</a>).</p>
 <section id="qcd-running-coupling">
-<h2>QCD Running Coupling<a class="headerlink" href="#qcd-running-coupling" title="Permalink to this heading">¶</a></h2>
+<h2>QCD Running Coupling<a class="headerlink" href="#qcd-running-coupling" title="Link to this heading">¶</a></h2>
 <p>A QCD coupling is created by specifying its value <code class="docutils literal notranslate"><span class="pre">alpha0</span></code> at some
 scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code>, together with the number of <code class="docutils literal notranslate"><span class="pre">nf</span></code> of quark flavors included
 in the vacuum polarization: for example,</p>
@@ -117,12 +114,12 @@ whose 4-flavor mass is <code class="docutils literal notranslate"><span class="p
 <span class="go">0.08191(34)</span>
 </pre></div>
 </div>
-<p>The couplings here are all in the standard <img class="math" src="_images/math/c4402de40cd2b0996ff660d7eab0e74d918d2c33.svg" alt="\overline{\mathrm{MS}}"/> scheme. Other
+<p>The couplings here are all in the standard <img class="math" src="_images/math/bb4cb91cb51c83c6dea52b711795553b335be3ca.svg" alt="\overline{\mathrm{MS}}"/> scheme. Other
 definitions/schemes for the coupling are supported (see below).</p>
 </section>
 <section id="running-masses">
-<h2>Running Masses<a class="headerlink" href="#running-masses" title="Permalink to this heading">¶</a></h2>
-<p>A running mass in the <img class="math" src="_images/math/c4402de40cd2b0996ff660d7eab0e74d918d2c33.svg" alt="\overline{\mathrm{MS}}"/> scheme is defined by the value <code class="docutils literal notranslate"><span class="pre">m0</span></code> of the mass
+<h2>Running Masses<a class="headerlink" href="#running-masses" title="Link to this heading">¶</a></h2>
+<p>A running mass in the <img class="math" src="_images/math/bb4cb91cb51c83c6dea52b711795553b335be3ca.svg" alt="\overline{\mathrm{MS}}"/> scheme is defined by the value <code class="docutils literal notranslate"><span class="pre">m0</span></code> of the mass
 at some scale <code class="docutils literal notranslate"><span class="pre">mu0</span></code>, in addition to the running coupling constant: for
 example,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
@@ -172,17 +169,17 @@ be created using <code class="xref py py-meth docutils literal notranslate"><spa
 </div>
 <p>Again <code class="xref py py-meth docutils literal notranslate"><span class="pre">M_msb.del_quark()</span></code> undoes <code class="xref py py-meth docutils literal notranslate"><span class="pre">M_msb.add_quark()</span></code>, and vice versa:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mc5</span><span class="o">.</span><span class="n">del_quark</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="n">mb</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mb</span><span class="p">)(</span><span class="mi">1000</span><span class="p">)</span>    <span class="c1"># compare mc(1000) above</span>
-<span class="go">0.5387(48)</span>
+<span class="go">0.5378(48)</span>
 </pre></div>
 </div>
 </section>
 <section id="operator-z-factors">
-<h2>Operator Z Factors<a class="headerlink" href="#operator-z-factors" title="Permalink to this heading">¶</a></h2>
-<p>The <img class="math" src="_images/math/2e7c4935067dc333bca39be1b7c9010381aa66d2.svg" alt="\mu"/> dependence of a local operator defined in the <img class="math" src="_images/math/c4402de40cd2b0996ff660d7eab0e74d918d2c33.svg" alt="\overline{\mathrm{MS}}"/> scheme is canceled
-by multiplying by a <img class="math" src="_images/math/714701aed95c362cc6133c650e3be27b830a4933.svg" alt="Z(\mu)"/> factor where</p>
+<h2>Operator Z Factors<a class="headerlink" href="#operator-z-factors" title="Link to this heading">¶</a></h2>
+<p>The <img class="math" src="_images/math/c077bae5e158519b17410d437e9827893b9364d1.svg" alt="\mu"/> dependence of a local operator defined in the <img class="math" src="_images/math/bb4cb91cb51c83c6dea52b711795553b335be3ca.svg" alt="\overline{\mathrm{MS}}"/> scheme is canceled
+by multiplying by a <img class="math" src="_images/math/e3b4778bdbf5103fe3cc1d7b03a44b705595f166.svg" alt="Z(\mu)"/> factor where</p>
 <div class="math">
-<p><img src="_images/math/70773e16bae48261188d88218c127761015a8d23.svg" alt="\mu^2\frac{d\ln{Z(\mu)}}{d\mu^2} = - \alpha_s(\mu)\sum_{n=0}^{N_\gamma} \gamma_n\, \alpha_s^n(\mu)"/></p>
-</div><p>where the <img class="math" src="_images/math/06d9cee8788eb73c601c4cde5eb878df3dfed881.svg" alt="\gamma_n"/> on right-hand side specify the operator’s anomalous dimension. Such
+<p><img src="_images/math/97ef618e8ed5befff149a38f598b2a7a2e37194c.svg" alt="\mu^2\frac{d\ln{Z(\mu)}}{d\mu^2} = - \alpha_s(\mu)\sum_{n=0}^{N_\gamma} \gamma_n\, \alpha_s^n(\mu)"/></p>
+</div><p>where the <img class="math" src="_images/math/eda5f5c419e71ff1a76291135473579636c68cee.svg" alt="\gamma_n"/> on right-hand side specify the operator’s anomalous dimension. Such
 functions are represented in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> by objects of type <code class="xref py py-class docutils literal notranslate"><span class="pre">OPZ</span></code>: for example,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">Alpha_s</span><span class="p">(</span><span class="n">alpha0</span><span class="o">=</span><span class="mf">0.2128</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
@@ -194,11 +191,11 @@ functions are represented in <a class="reference internal" href="qcdevol.html#mo
 </pre></div>
 </div>
 <p>defines a Z factor <code class="docutils literal notranslate"><span class="pre">z(mu)</span></code> where the array <code class="docutils literal notranslate"><span class="pre">gamma</span></code> specifies the
-coefficients <img class="math" src="_images/math/06d9cee8788eb73c601c4cde5eb878df3dfed881.svg" alt="\gamma_n"/> in the evolution equation.</p>
+coefficients <img class="math" src="_images/math/eda5f5c419e71ff1a76291135473579636c68cee.svg" alt="\gamma_n"/> in the evolution equation.</p>
 </section>
 <section id="coupling-schemes">
-<h2>Coupling Schemes<a class="headerlink" href="#coupling-schemes" title="Permalink to this heading">¶</a></h2>
-<p>By default, <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> uses the standard <img class="math" src="_images/math/c4402de40cd2b0996ff660d7eab0e74d918d2c33.svg" alt="\overline{\mathrm{MS}}"/> scheme to define
+<h2>Coupling Schemes<a class="headerlink" href="#coupling-schemes" title="Link to this heading">¶</a></h2>
+<p>By default, <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> uses the standard <img class="math" src="_images/math/bb4cb91cb51c83c6dea52b711795553b335be3ca.svg" alt="\overline{\mathrm{MS}}"/> scheme to define
 couplings, but other definitions are supported and it is easy
 to switch between schemes. For example,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
@@ -210,21 +207,21 @@ to switch between schemes. For example,</p>
 </pre></div>
 </div>
 <p>defines a coupling in the V scheme but <code class="docutils literal notranslate"><span class="pre">alv(5,</span> <span class="pre">'msb')</span></code> gives the value
-of the corresponding <img class="math" src="_images/math/c4402de40cd2b0996ff660d7eab0e74d918d2c33.svg" alt="\overline{\mathrm{MS}}"/> coupling at <code class="docutils literal notranslate"><span class="pre">mu=5</span></code>. The V scheme is defined
+of the corresponding <img class="math" src="_images/math/bb4cb91cb51c83c6dea52b711795553b335be3ca.svg" alt="\overline{\mathrm{MS}}"/> coupling at <code class="docutils literal notranslate"><span class="pre">mu=5</span></code>. The V scheme is defined
 in terms of the static-quark potential and is particularly
 useful when the renormalization scale is set using the BLM criterion
-(<a class="reference external" href="https://doi.org/10.1103/PhysRevD.28.228">Phys. Rev. D28 (1983) 228</a>,
-and <a class="reference external" href="https://arxiv.org/pdf/hep-lat/9209022.pdf">Phys.Rev.D 48 (1993) 2250</a>)</p>
-<p>The coupling <img class="math" src="_images/math/7e223e945b55eee744a8f7d6d673ebc15392c6b4.svg" alt="\alpha_s"/> in another scheme is specified in
-terms of <img class="math" src="_images/math/facb954aff946203f06d9bcb8a092728faa64358.svg" alt="\alpha_\mathrm{\overline{MS}}"/>:</p>
+(<a class="reference external" href="https://doi.org/10.1103/PhysRevD.28.228">Phys. Rev. D28 (1983) 228</a>
+and <a class="reference external" href="https://arxiv.org/pdf/hep-lat/9209022.pdf">Phys. Rev. D 48 (1993) 2250</a>).</p>
+<p>The coupling <img class="math" src="_images/math/1109d83af8fbefaf7eeb83ad86b6bbd28061b269.svg" alt="\alpha_s"/> in another scheme is specified in
+terms of <img class="math" src="_images/math/5d593f60691e2b35ab732333f0161e2a5b148748.svg" alt="\alpha_\mathrm{\overline{MS}}"/>:</p>
 <div class="math">
-<p><img src="_images/math/42cb7641ea3e146f0d2a8556952c7c2a92365d4f.svg" alt="\alpha_s(\mu) \equiv
+<p><img src="_images/math/5cbaf59c9a00670b0707fe3e7755e1aec6a3b8f8.svg" alt="\alpha_s(\mu) \equiv
 \alpha_\mathrm{\overline{MS}}(r\mu)\Big(1 + \alpha_\mathrm{\overline{MS}}(r\mu)
 \sum_{n=0}^{N_s} c_n\, \alpha_\mathrm{\overline{MS}}^{n}(r\mu)
 \Big)"/></p>
 </div><p>Schemes are implemented using a dictionary <code class="docutils literal notranslate"><span class="pre">qcdevol.SCHEMES</span></code> where <code class="docutils literal notranslate"><span class="pre">SCHEMES[scheme](nf)</span></code>
-is a function call that returns a tuple containing the <img class="math" src="_images/math/82328b4f4ea26df0e9c6c5a14c5b1b5de7cdf2f3.svg" alt="c_n"/> coefficients and the
-rescaling parameter <img class="math" src="_images/math/1ba60755dbadce5b4b1af13432542514005ed682.svg" alt="r"/> for <code class="docutils literal notranslate"><span class="pre">nf</span></code> flavors:</p>
+is a function call that returns a tuple containing the <img class="math" src="_images/math/c8bc79bf0163331b9d09ecc6849ecba00639cc71.svg" alt="c_n"/> coefficients and the
+rescaling parameter <img class="math" src="_images/math/cafd5012c402a1f53fe255637820de327ad6279c.svg" alt="r"/> for <code class="docutils literal notranslate"><span class="pre">nf</span></code> flavors:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qcd</span><span class="o">.</span><span class="n">SCHEMES</span><span class="p">[</span><span class="s1">&#39;msb&#39;</span><span class="p">](</span><span class="mi">4</span><span class="p">)</span>           <span class="c1"># MS-bar scheme with nf=4</span>
 <span class="go">(array([], dtype=float64), 1.0)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">qcd</span><span class="o">.</span><span class="n">SCHEMES</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">](</span><span class="mi">4</span><span class="p">)</span>             <span class="c1"># V scheme with nf=4</span>
@@ -233,13 +230,13 @@ rescaling parameter <img class="math" src="_images/math/1ba60755dbadce5b4b1af134
 </div>
 <p>From this output above, the <code class="docutils literal notranslate"><span class="pre">nf=4</span></code> V coupling is given by:</p>
 <div class="math">
-<p><img src="_images/math/69c3cb80f00b968f68d1b1411a31ddfa9a4c2eda.svg" alt="\alpha_V(\mu) \equiv \alpha_\mathrm{\overline{MS}}(0.435 \mu)
+<p><img src="_images/math/9b92cb1283433f2932b41804653cac896cf4ea12.svg" alt="\alpha_V(\mu) \equiv \alpha_\mathrm{\overline{MS}}(0.435 \mu)
 - 0.637 \alpha_\mathrm{\overline{MS}}^2(0.435 \mu)
 + 0.981 \alpha_\mathrm{\overline{MS}}^3(0.435 \mu)"/></p>
 </div><p>Additional schemes can be added to the dictionary.</p>
 </section>
 <section id="qed-effects">
-<h2>QED Effects<a class="headerlink" href="#qed-effects" title="Permalink to this heading">¶</a></h2>
+<h2>QED Effects<a class="headerlink" href="#qed-effects" title="Link to this heading">¶</a></h2>
 <p>Leading-order QED corrections from the beta function and quark mass gamma function
 can be included in couplings and quark masses:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcdevol</span> <span class="k">as</span> <span class="nn">qcd</span>
@@ -254,7 +251,7 @@ should be set to a value of the running QED coupling appropriate to the
 scales of interest.</p>
 </section>
 <section id="power-series">
-<h2>Power Series<a class="headerlink" href="#power-series" title="Permalink to this heading">¶</a></h2>
+<h2>Power Series<a class="headerlink" href="#power-series" title="Link to this heading">¶</a></h2>
 <p><a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> has a couple of tools for manipulating perturbation series. These series are
 represented by objects of type <code class="xref py py-class docutils literal notranslate"><span class="pre">gvar.powerseries.PowerSeries</span></code> where, for
 example,</p>
@@ -294,7 +291,7 @@ method:</p>
 </div>
 <p>Here <code class="docutils literal notranslate"><span class="pre">al_mu</span></code> is the perturbative expansion of <code class="docutils literal notranslate"><span class="pre">al(10)</span></code> in powers of <code class="docutils literal notranslate"><span class="pre">al(5.)</span></code>. The
 default order for such expansions is 25; it can be reset using parameter <code class="docutils literal notranslate"><span class="pre">order</span></code>
-(or using <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>). Although the QCD <img class="math" src="_images/math/9a6b8c5b2fdd0ab0fcc4cc895240f2e0c3f27597.svg" alt="\beta"/> function in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>
+(or using <code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.setdefaults()</span></code>). Although the QCD <img class="math" src="_images/math/4a4a94b266c0751a4e0581b1aec8d30e82158155.svg" alt="\beta"/> function in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>
 includes only 5 terms, we generally want to include many more terms in
 expansions from <code class="xref py py-meth docutils literal notranslate"><span class="pre">Alpha_s.ps()</span></code> in order to capture the leading
 logarithms from higher orders. (Note how the size of the coefficients grows with
@@ -355,9 +352,13 @@ of <code class="docutils literal notranslate"><span class="pre">al(2)</span></co
 <code class="docutils literal notranslate"><span class="pre">zps_mu</span></code> but <code class="docutils literal notranslate"><span class="pre">al(2)**n</span></code> gets smaller faster, so the result for
 <code class="docutils literal notranslate"><span class="pre">zps_mu(al(2))</span></code> is quite accurate (compare with <code class="docutils literal notranslate"><span class="pre">z(2)</span></code>). Higher orders
 are needed when <code class="docutils literal notranslate"><span class="pre">mu/mu0</span></code> becomes large or small.</p>
+<p>A variation on <a class="reference internal" href="qcdevol.html#qcdevol.evol_ps" title="qcdevol.evol_ps"><code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.evol_ps()</span></code></a>  is <a class="reference internal" href="qcdevol.html#qcdevol.evol_xips" title="qcdevol.evol_xips"><code class="xref py py-func docutils literal notranslate"><span class="pre">qcdevol.evol_xips()</span></code></a> which is
+used for series whose coefficients depend upon some function <code class="docutils literal notranslate"><span class="pre">xi(mu)</span></code> rather
+than <code class="docutils literal notranslate"><span class="pre">mu</span></code> directly. A common case is <code class="docutils literal notranslate"><span class="pre">xi(mu)</span> <span class="pre">=</span> <span class="pre">mu/m(mu)</span></code> where <code class="docutils literal notranslate"><span class="pre">m(mu)</span></code>
+is a quark mass.</p>
 </section>
 <section id="more-about-uncertainties">
-<h2>More About Uncertainties<a class="headerlink" href="#more-about-uncertainties" title="Permalink to this heading">¶</a></h2>
+<h2>More About Uncertainties<a class="headerlink" href="#more-about-uncertainties" title="Link to this heading">¶</a></h2>
 <p>As discussed above, parameters <code class="docutils literal notranslate"><span class="pre">alpha0</span></code> in <code class="xref py py-class docutils literal notranslate"><span class="pre">Alpha_s</span></code> and <code class="docutils literal notranslate"><span class="pre">m0</span></code> in <code class="xref py py-class docutils literal notranslate"><span class="pre">M_msb</span></code>
 can be specified with uncertainties by replacing numbers with Gaussian random variables
 (objects with a mean and standard deviation
@@ -502,7 +503,7 @@ only uncertainties that matter for both the coupling and mass.</p>
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -510,7 +511,7 @@ only uncertainties that matter for both the coupling and mass.</p>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
@@ -531,13 +532,13 @@ only uncertainties that matter for both the coupling and mass.</p>
         <li class="right" >
           <a href="index.html" title="qcdevol Documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Overview and Tutorial</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, G. P. Lepage.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    &#169; Copyright 2023, G. P. Lepage.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     </div>
   </body>
 </html>

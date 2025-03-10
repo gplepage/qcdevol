@@ -9,9 +9,11 @@ SRCFILES := $(shell ls setup.py pyproject.toml src/qcdevol/*.py)
 DOCFILES := $(shell ls doc/*.rst doc/conf.py)
 
 install-user :
+	python make_version.py src/qcdevol/_version.py
 	$(PIP) install . --user --no-cache-dir
 
 install install-sys :
+	python make_version.py src/qcdevol/_version.py
 	$(PIP) install . --no-cache-dir
 
 uninstall :			# mostly works (may leave some empty directories)

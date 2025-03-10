@@ -1,7 +1,7 @@
 # This module implements evolution equations for the coupling constant and 
 # operator expectation values in QCD.
 
-#     Copyright (C) 2023 G. Peter Lepage
+#     Copyright (C) 2023-2025 G. Peter Lepage
 
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ __all__ = [
     'RTOL', 'ORDER', 'HMIN', 'SCHEMES', 
     'setdefaults', 'Alpha_s', 'OPZ', 'M_msb', 'evol_ps',
     'BETA_MSB', 'GAMMA_MSB', 'ZETA2_G_MSB', 'ZETA_M_MSB',
-    'Alphas', 'Mmsb', 'oldevol_ps',
+    'Alphas', 'Mmsb', 'evol_xips'
     ]
 
 # constants used in beta fcns, etc
@@ -959,7 +959,9 @@ def evol_ps(pseries, mu, mu0, nf, gamma=None, beta_msb=None, order=None):
         Power series for ``S(mu)`` in powers of ``alpha(mu)``, an object of 
         type :class:`gvar.powerseries.PowerSeries`.
     """
-    order = pseries.order if order is None else max(pseries.order, order)
+    order = pseries.order if order is None else order # max(pseries.order, order)
+    order += 1  # why is this needed?
+    pseries = gvar.powerseries.PowerSeries(pseries.c, order=order)
     if numpy.shape(mu) != ():
         mu, scheme = mu
     else:
@@ -1012,7 +1014,101 @@ def evol_ps(pseries, mu, mu0, nf, gamma=None, beta_msb=None, order=None):
     # convert to final scheme
     if scheme != 'msb':
         ans = ans(almu.ps(mu, mu0=(mu / r, scheme)))
-    return ans 
+    return gvar.powerseries.PowerSeries(ans.c, order=order - 1)
+
+def evol_xips(pseries, xi, xi0, nf, gamma=None, gamma_xi=None, beta_msb=None, order=None, rtol=None):
+    """ Evolve power series in ``alpha`` from scale ``mu0`` to scale ``mu``.
+       
+    Given a power series in coupling ``alpha(mu0)`` ::
+       
+       S(mu0) = sum_n=0..order c_n(xi(mu0)) * alpha(mu0)**n
+       
+    this function calculates the coefficients ``c_n(xi(mu))`` for the 
+    the expansion of ``S(mu)`` in powers of ``alpha(mu)`` where ::
+
+        d/dt ln(S(mu))  = - alpha(mu) * sum_n=0..N gamma[n] * alpha(mu)**n
+
+        d/dt ln(xi(mu)) = - sum_n=0..M gamma_xi[n] * alpha(mu)**n
+
+    and ``t=ln(mu**2)``. The new coefficients depend only on the 
+    coefficients of the original power series,  the ratio |~| ``xi(mu)/xi(mu0)``, 
+    the number ``nf`` of quark flavors included in the coupling
+    and the coefficients ``gamma[n]`` and ``gamma_xi[n]``.
+    The initial expansion ``S(mu0)`` is specified by ``pseries`` which 
+    is an object of type :class:`gvar.powerseries.PowerSeries` 
+    (for more information, see the documentation for the :mod:`gvar` 
+    module). The final power series ``S(mu)`` is returned as an 
+    object of the same type.
+    
+    Typical usage is ::
+
+        >>> import qcdevol as qcd
+        >>> import gvar as gv 
+        >>> nf = 4
+        >>> r_mu0 = gv.powerseries([ 1., 0.61598858, 0.50421341, -0.10263586])
+        >>> gamma_r = [0.31830989, 0.3701037, 0.32080731, 0.28029143, 0.36464844]
+        >>> gamma_xi = [-0.5] + list(-qcd.GAMMA_MSB(nf))        # xi = mu/m(mu)
+        >>> r_mu = qcd.evol_xips(r_mu0, xi=2, xi0=1, nf=nf, gamma=gamma_r, gamma_xi=gamma_xi)
+        >>> print(r)
+        [1.         0.17471737 0.46105875 0.48103527]    
+    
+    where ``r_mu0`` is a power series in ``alphas(mu0)`` evaluated 
+    at ``xi0 = mu0/m(mu0) = 1`` and ``r_mu`` is the same series 
+    but evaluated at ``xi = mu/m(mu) = 2``. The power series are 
+    specified by the values of the first four coefficients in the 
+    perturbative expansion. The anomalous dimension for this series 
+    is specified by ``gamma_r``, while the anomalous dimension for 
+    ``xi(mu) = mu/m(mu)``is specified by ``gamma_xi``. (``m(mu)`` is 
+    a quark mass.)
+
+    By default, ``xi(mu)=mu`` and ``gamma_xi=[-0.5]`` when ``gamma_xi is 
+    not specified. Then ``evol_xips`` becomes functionally equivalent to
+    ``evol_ps`` but is typically slower than the latter. ``evol_xips`` 
+    can only be used with the MS-bar scheme.
+
+    Args:
+        pseries: Object of type :class:`gvar.powerseries.PowerSeries`  
+            representing ``S(mu0)``, a series in powers of ``alpha(mu0)`` 
+            with coefficients ``pseries.c[n]`` (functions of ``xi(mu)``).
+        xi: Results returned for the series ``S(mu)`` in terms of ``alpha(mu)``
+            where ``xi`` equals ``xi(mu)``.
+        xi0: Parameter ``pseries`` gives the expansion of ``S(mu0)`` in 
+            powers of ``alpha(mu0)`` where ``xi0`` equals ``xi(mu0)``.
+        nf (int): Number of quark flavors included in the coupling.
+        gamma (array): Coefficients ``gamma[n]`` of the anomalous dimension
+            associated with ``pseries`` (see above). 
+        gamma_xi (array): Coefficients ``gamma_xi[n]`` that specify 
+            ``d/dlog(mu^2) xi(mu)``. If ``gamma_xi`` unspecified (or ``None``),
+            ``xi(mu)=mu`` and ``gamma=[-0.5]`` (default).
+        beta_msb (array or None): If not ``None``, replaces the default 
+            MSbar beta function (from :func:`qcdevol.BETA_MSB`). Ignored 
+            if ``None`` (default).
+        order: Order to which the expansion of ``S(mu)`` is carried. 
+            If ``order=None``, ``order`` is set equal to ``pseries.order``.
+
+    Returns:
+        Power series for ``S(mu)`` in powers of ``alpha(mu)``, an object of 
+        type :class:`gvar.powerseries.PowerSeries`, where ``xi(mu)`` equals 
+        parameter ``xi`` specifies ``mu``.
+    """
+    order = pseries.order if order is None else order
+    pseries = gvar.powerseries.PowerSeries(pseries.c, order=order)
+    gamma = gvar.powerseries.PowerSeries([0] if gamma is None else [0] + list(gamma), order=order)
+    gamma_xi = gvar.powerseries.PowerSeries([-0.5] if gamma_xi is None else gamma_xi, order=order)
+    if gamma_xi.c[0] == 0 or abs(gamma_xi.c[0]) < 1e-10 * max(gamma_xi.c ** 2) ** 0.5:
+        raise ValueError(f'gamma_xi.c[0] is zero (or too small): {gamma_xi.c[0]}')
+    beta = gvar.powerseries.PowerSeries([0,0] + BETA_MSB(nf).tolist() if beta_msb is None else beta_msb, order=order)
+    log_xi_xi0 = numpy.log(xi / xi0)
+    def dpseries_dlogxi(xi, pseries_c):
+        ps = gvar.powerseries.PowerSeries(pseries_c, order=order)
+        dps_dal =  gvar.powerseries.PowerSeries(ps.deriv(), order=order)
+        drn_dxi = (ps * gamma - dps_dal * beta) / gamma_xi
+        return drn_dxi.c * log_xi_xi0
+    with warnings.catch_warnings():
+        # overly sensitive to hmin
+        # warnings.simplefilter('ignore')
+        odeint = gvar.ode.Integrator(deriv=dpseries_dlogxi, tol=RTOL if rtol is None else rtol, hmin=HMIN)
+        return gvar.powerseries.PowerSeries(odeint(pseries.c, interval=(0, 1)), order=order)
 
 def root_secant(f, x1, x2, maxit, rtol, tag=""):
     """ Find zero of ``f(x)`` starting from extimates ``x1`` (better) and ``x2``. """
@@ -1282,6 +1378,7 @@ def ZETA_M_MSB(nf, m, mu, terr=None):
 # legacy classes
 
 class Alphas(Alpha_s):
+    """ Legacy code - do not use. """
     def __init__(self, alpha, mu, nf, scheme='msb', fx=3 * [0.0], tol=None, nitn=None, beta_msb=None,
         hmin=None, f4=None):
         if beta_msb is None and fx[0] != 0:
@@ -1322,6 +1419,7 @@ class Alphas(Alpha_s):
         return super().del_quark(m=m, mu=mu, zeta=zeta)
 
 class Mmsb(M_msb):
+    """ Legacy code - do not use. """
     def __init__(
         self, m, mu, alpha, fx=2 * [0.0],
         tol=None, hmin=None, nitn=None, gamma_msb=None, f4=None,

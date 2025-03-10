@@ -1,19 +1,16 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Implementation &#8212; qcdevol 4.0.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/pyramid.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
+    <title>Implementation &#8212; qcdevol 4.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4848ba22" />
+    <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=310c80ee" />
+    <script src="_static/documentation_options.js?v=3b2dd2c4"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="qcdevol Module" href="qcdevol.html" />
@@ -41,7 +38,7 @@
         <li class="right" >
           <a href="tutorial.html" title="Overview and Tutorial"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Implementation</a></li> 
       </ul>
     </div>  
@@ -52,23 +49,23 @@
           <div class="body" role="main">
             
   <section id="implementation">
-<h1>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading">¶</a></h1>
+<h1>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">¶</a></h1>
 <section id="qcd-coupling">
-<h2>QCD Coupling<a class="headerlink" href="#qcd-coupling" title="Permalink to this heading">¶</a></h2>
-<p>The value of the QCD coupling <img class="math" src="_images/math/9c660e6041dc8348312204ec03c3ba95926e5a2d.svg" alt="\alpha_s(\mu)"/> at scale <img class="math" src="_images/math/2e7c4935067dc333bca39be1b7c9010381aa66d2.svg" alt="\mu"/>
+<h2>QCD Coupling<a class="headerlink" href="#qcd-coupling" title="Link to this heading">¶</a></h2>
+<p>The value of the QCD coupling <img class="math" src="_images/math/a861026179b560f011b6f659e123163e8052c53f.svg" alt="\alpha_s(\mu)"/> at scale <img class="math" src="_images/math/c077bae5e158519b17410d437e9827893b9364d1.svg" alt="\mu"/>
 is specified by the evolution equation,</p>
 <div class="math">
-<p><img src="_images/math/0ba41aaf9cc0b45ad1c7e17e1fee435ed5ff1265.svg" alt="\mu^2\frac{d\alpha_s(\mu)}{d\mu^2} =
+<p><img src="_images/math/6b88a8fc52d76d9395bec094517a769953a4e611.svg" alt="\mu^2\frac{d\alpha_s(\mu)}{d\mu^2} =
 -\alpha_s(\mu)^2\sum_{n=0}^{N_\beta}\beta_n\,\alpha_s^n(\mu),"/></p>
-</div><p>and an initial value <img class="math" src="_images/math/9554a14bc11dff486aef520109c87b066ad9d0da.svg" alt="\alpha_s(\mu_0) = \alpha_0"/>.
-In <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>, <img class="math" src="_images/math/79a7ea4a8bcccf23465b6c629651cb1f26c217f4.svg" alt="N_\beta = 4"/> for the <img class="math" src="_images/math/c4402de40cd2b0996ff660d7eab0e74d918d2c33.svg" alt="\overline{\mathrm{MS}}"/> scheme; the coefficients
-<img class="math" src="_images/math/1cf5d62f95ba60988856fff52131d8ecb696a92d.svg" alt="\beta_n"/> are given by <code class="docutils literal notranslate"><span class="pre">qcdevol.BETA_MSB(nf)</span></code>.</p>
+</div><p>and an initial value <img class="math" src="_images/math/9523c847ed8b1dee2296f53c075e11ee8eafc2dd.svg" alt="\alpha_s(\mu_0) = \alpha_0"/>.
+In <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>, <img class="math" src="_images/math/61180ba693f5f21ec0c1d70615d18cdd247725e6.svg" alt="N_\beta = 4"/> for the <img class="math" src="_images/math/bb4cb91cb51c83c6dea52b711795553b335be3ca.svg" alt="\overline{\mathrm{MS}}"/> scheme; the coefficients
+<img class="math" src="_images/math/82bc9423309a40b97f557ebffb288173874180c5.svg" alt="\beta_n"/> are given by <code class="docutils literal notranslate"><span class="pre">qcdevol.BETA_MSB(nf)</span></code>.</p>
 <p>While it is possible
 to integrate the evolution equation directly (see <code class="xref py py-meth docutils literal notranslate"><span class="pre">Alpha_s.exact()</span></code>),
 a faster method is based upon an expansion of
 the equivalent integrals,</p>
 <div class="math">
-<p><img src="_images/math/9e9ec8eb688898041cf39a7ef0a1815f47ad06ce.svg" alt="\int\limits_{\mu_0}^{\mu} \frac{d\mu^2}{\mu^2}
+<p><img src="_images/math/7202898f70887bdf1215f07b989ae6a4f7fb0ab4.svg" alt="\int\limits_{\mu_0}^{\mu} \frac{d\mu^2}{\mu^2}
 &amp;= - \int\limits_{\alpha_0}^{\alpha_s(\mu)}
 \frac{d\alpha_s}{\alpha_s^2}\,\frac{1}{\sum\limits_{n=0}^{N_\beta}\beta_n\,\alpha_s^n}
 \\
@@ -77,55 +74,55 @@ the equivalent integrals,</p>
 \sum\limits_{n=0}^{N_\alpha} d_n\,\alpha_s^n,"/></p>
 </div><p>where</p>
 <div class="math">
-<p><img src="_images/math/87c0715f00e604ebd72250a490b20372e6f26a2c.svg" alt="d_0 = 1 \quad\quad d_1 = -\beta_1/\beta_0 \quad\quad
+<p><img src="_images/math/2b1f24831cbfe11e2c502610ca045ae5f0cfab03.svg" alt="d_0 = 1 \quad\quad d_1 = -\beta_1/\beta_0 \quad\quad
 d_2 = -\beta_2/\beta_0 + \beta_1^2/\beta_0^2
     \quad\quad\cdots"/></p>
-</div><p>and <img class="math" src="_images/math/9e4f0663cb5e8791039b31e5cb233455d7136046.svg" alt="N_\alpha"/> is chosen large enough to give the desired
-accuracy. (By default <img class="math" src="_images/math/cf91cabc4440e75d7460aa5b818ce3a5f609193d.svg" alt="N_\alpha=25"/> in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> which is more
+</div><p>and <img class="math" src="_images/math/254bb1f3328c894219906781772ff6615c0d6121.svg" alt="N_\alpha"/> is chosen large enough to give the desired
+accuracy. (By default <img class="math" src="_images/math/ba70944670cb5f231bd595992a4aec18de26d93c.svg" alt="N_\alpha=25"/> in <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a> which is more
 than adequate for most purposes.) Evaluating the integrals and rearranging
 gives an equation,</p>
 <div class="math">
-<p><img src="_images/math/302940fc09f6886422e3eea08f182423f71ea3c6.svg" alt="\frac{1}{\alpha_s(\mu)}
+<p><img src="_images/math/cb82f3bf39de8ef5cc8d1bf3a20480dff1f61d49.svg" alt="\frac{1}{\alpha_s(\mu)}
 = \frac{1}{\alpha_0} + \beta_0\ln\big(\mu^2/\mu_0^2\big)
 + d_1 \ln\big(\alpha_s(\mu)/\alpha_0\big)
 + \sum\limits_{n=1}^{N_\alpha-1} \frac{d_{n+1}}{n}\big(\alpha_s^n(\mu) - \alpha_0^n\big),"/></p>
-</div><p>that determines <img class="math" src="_images/math/9c660e6041dc8348312204ec03c3ba95926e5a2d.svg" alt="\alpha_s(\mu)"/> implicitly. This equation can be solved for <img class="math" src="_images/math/9c660e6041dc8348312204ec03c3ba95926e5a2d.svg" alt="\alpha_s(\mu)"/>,
+</div><p>that determines <img class="math" src="_images/math/a861026179b560f011b6f659e123163e8052c53f.svg" alt="\alpha_s(\mu)"/> implicitly. This equation can be solved for <img class="math" src="_images/math/a861026179b560f011b6f659e123163e8052c53f.svg" alt="\alpha_s(\mu)"/>,
 for example, by using a root-finding algorithm like the secant method; typically
 only a few iterations are required.</p>
 <p>The radius of convergence for the expansion of the inverse beta function is easily
-calculated. In the <img class="math" src="_images/math/c4402de40cd2b0996ff660d7eab0e74d918d2c33.svg" alt="\overline{\mathrm{MS}}"/> scheme with <img class="math" src="_images/math/b69d461ce24446c0dea15d676a35604eedc34081.svg" alt="n_f=4"/>, it is <img class="math" src="_images/math/549031ce5a5c2efe198a3835a2553a440eb5f1b9.svg" alt="\alpha_\mathrm{max}=1.228"/>,
+calculated. In the <img class="math" src="_images/math/bb4cb91cb51c83c6dea52b711795553b335be3ca.svg" alt="\overline{\mathrm{MS}}"/> scheme with <img class="math" src="_images/math/b23bbe15bc50cd02199d51e224f8d8862fc5f4e7.svg" alt="n_f=4"/>, it is <img class="math" src="_images/math/b078ed28ded18f588eaaa98853a9f0dad516fac8.svg" alt="\alpha_\mathrm{max}=1.228"/>,
 which is much larger than what is usually needed.</p>
 <p>This approach to calculating the evolution can be efficiently implemented directly
 in Python,
 without resort to underlying code in C or Cython. This is useful for error
 propagation because it means that any of the parameters can be assigned an
 uncertainty (using the <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar</span></code> module).</p>
-<p>QCD couplings are defined to include a specific number <img class="math" src="_images/math/0ba27a44397e2b09a99d11e5ce794551396fd91d.svg" alt="n_f"/> of quarks
+<p>QCD couplings are defined to include a specific number <img class="math" src="_images/math/758bc963ae510d9839e8e1695b47f66c8efe10b2.svg" alt="n_f"/> of quarks
 in the vacuum polarization. It is possible using perturbation theory
-to remove a heavy quark, with mass <img class="math" src="_images/math/c524e5db9a68f7a463fd4d44a21f51551de3c380.svg" alt="m(\mu)"/>, from a coupling to
-obtain a new coupling with <img class="math" src="_images/math/b95b38192f8c55e02d4b1cde497d574cf74a98ce.svg" alt="n_f-1"/> flavors:</p>
+to remove a heavy quark, with mass <img class="math" src="_images/math/4628329b815731b738fcad173eda5a0df658beff.svg" alt="m(\mu)"/>, from a coupling to
+obtain a new coupling with <img class="math" src="_images/math/e63bff964e4a8f35ed6eed52c09a25cd83c3db92.svg" alt="n_f-1"/> flavors:</p>
 <div class="math">
-<p><img src="_images/math/b285bac94a9deb9e0e270faf9ae835228196c708.svg" alt="\alpha_s(\mu, n_f-1) = \alpha_s(\mu,n_f)
+<p><img src="_images/math/a967f5fc94a5aa993448d20ef01cf050689c8088.svg" alt="\alpha_s(\mu, n_f-1) = \alpha_s(\mu,n_f)
 \bigg(1 + \alpha_s(\mu,n_f)
 \sum\limits_{n=0}^{N_{\zeta}^{(\alpha)}}
 \zeta^{(\alpha)}_n \alpha_s^n(\mu,n_f) \bigg)"/></p>
-</div><p>where the <img class="math" src="_images/math/58ea79cb115fa4febd73536cbf166b965a1569f0.svg" alt="\zeta^{(\alpha)}_n"/> depend upon <img class="math" src="_images/math/c524e5db9a68f7a463fd4d44a21f51551de3c380.svg" alt="m(\mu)"/>, <img class="math" src="_images/math/2e7c4935067dc333bca39be1b7c9010381aa66d2.svg" alt="\mu"/>, and <img class="math" src="_images/math/0ba27a44397e2b09a99d11e5ce794551396fd91d.svg" alt="n_f"/>,
-and <img class="math" src="_images/math/38ec86c33a360c9470de92700170240306b7a962.svg" alt="N_{\zeta}^{(\alpha)}"/>. The same equation can be used to add a quark
-flavor by solving for <img class="math" src="_images/math/5d9171d4a66d7b96a17d822c781680d39b71b25b.svg" alt="\alpha_s(\mu, n_f)"/> numerically; adding a quark is then the
+</div><p>where the <img class="math" src="_images/math/69638ff90847dae776c65a725a0456e7a545f74c.svg" alt="\zeta^{(\alpha)}_n"/> depend upon <img class="math" src="_images/math/4628329b815731b738fcad173eda5a0df658beff.svg" alt="m(\mu)"/>, <img class="math" src="_images/math/c077bae5e158519b17410d437e9827893b9364d1.svg" alt="\mu"/>, and <img class="math" src="_images/math/758bc963ae510d9839e8e1695b47f66c8efe10b2.svg" alt="n_f"/>,
+and <img class="math" src="_images/math/51ea63ed7f02fba8dda248cdb9e7f0de15e8cae9.svg" alt="N_{\zeta}^{(\alpha)}"/>. The same equation can be used to add a quark
+flavor by solving for <img class="math" src="_images/math/f49d6c9dcac1cfafb6488e56770b6894648d8c34.svg" alt="\alpha_s(\mu, n_f)"/> numerically; adding a quark is then the
 exact inverse of removing a quark.</p>
 </section>
 <section id="quark-mass">
-<h2>Quark Mass<a class="headerlink" href="#quark-mass" title="Permalink to this heading">¶</a></h2>
-<p>The evolution of the <img class="math" src="_images/math/c4402de40cd2b0996ff660d7eab0e74d918d2c33.svg" alt="\overline{\mathrm{MS}}"/> mass <img class="math" src="_images/math/c524e5db9a68f7a463fd4d44a21f51551de3c380.svg" alt="m(\mu)"/> is specified by</p>
+<h2>Quark Mass<a class="headerlink" href="#quark-mass" title="Link to this heading">¶</a></h2>
+<p>The evolution of the <img class="math" src="_images/math/bb4cb91cb51c83c6dea52b711795553b335be3ca.svg" alt="\overline{\mathrm{MS}}"/> mass <img class="math" src="_images/math/4628329b815731b738fcad173eda5a0df658beff.svg" alt="m(\mu)"/> is specified by</p>
 <div class="math">
-<p><img src="_images/math/142d6c1c9d1068b50f9a8cff2a25ab346ed6db24.svg" alt="\mu^2 \frac{d\ln(m(\mu))}{d\mu^2} = - \alpha_s(\mu)\sum\limits_{n=0}^{N_\gamma}
+<p><img src="_images/math/a1228489717270bb425aba96576942d2c4f0a07f.svg" alt="\mu^2 \frac{d\ln(m(\mu))}{d\mu^2} = - \alpha_s(\mu)\sum\limits_{n=0}^{N_\gamma}
 \gamma_n\,\alpha_s^n(\mu)"/></p>
-</div><p>with initial condition <img class="math" src="_images/math/e61240ec50c8ea3c7ed5f91eebb554b684e2d948.svg" alt="m(\mu_0)=m_0"/>. In <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>, <img class="math" src="_images/math/dde046174a5f8d247ed18287e9a0e927cc4492e2.svg" alt="N_\gamma=4"/>;
-the coefficients <img class="math" src="_images/math/06d9cee8788eb73c601c4cde5eb878df3dfed881.svg" alt="\gamma_n"/> are given by <code class="docutils literal notranslate"><span class="pre">qcdevol.GAMMA_MSB(nf)</span></code>.</p>
+</div><p>with initial condition <img class="math" src="_images/math/98826b9ec28dc1a1e79e00f179b70133e62eefd7.svg" alt="m(\mu_0)=m_0"/>. In <a class="reference internal" href="qcdevol.html#module-qcdevol" title="qcdevol: Evolution  of QCD couplings, masses and other renormalization parameters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">qcdevol</span></code></a>, <img class="math" src="_images/math/83935e84f25598cbf6b8fbf886c014859651be50.svg" alt="N_\gamma=4"/>;
+the coefficients <img class="math" src="_images/math/eda5f5c419e71ff1a76291135473579636c68cee.svg" alt="\gamma_n"/> are given by <code class="docutils literal notranslate"><span class="pre">qcdevol.GAMMA_MSB(nf)</span></code>.</p>
 <p>This equation also can be written as
 an integral</p>
 <div class="math">
-<p><img src="_images/math/b03167a41c6f27ddaf412beba16c4c35f6bf0a92.svg" alt="\int\limits_{m_0}^{m(\mu)} \frac{dm}{m}
+<p><img src="_images/math/efe6a7755d466b1cf534c900ce1ff2823770f0a0.svg" alt="\int\limits_{m_0}^{m(\mu)} \frac{dm}{m}
 &amp;= \int\limits_{\alpha_s(\mu_0)}^{\alpha_s(\mu)}\frac{d\alpha_s}{\alpha_s}
 \frac{\sum_{n=0}^{N_\gamma}\gamma_n\,\alpha_s^n}{\sum\limits_{n=0}^{N_\beta} \beta_n\,\alpha_s^n}
 \\
@@ -133,22 +130,22 @@ an integral</p>
 \sum\limits_{n=0}^{N_m} \tilde d_n \alpha_s^n"/></p>
 </div><p>where</p>
 <div class="math">
-<p><img src="_images/math/4ba601709bea68b8c3304a997e17452a1c5c0274.svg" alt="\beta_0 \tilde d_0 = \gamma_0 \quad\quad \beta_0\tilde d_1 = \gamma_1 - \gamma_0\beta_1/\beta_0
+<p><img src="_images/math/1e8e4ed8e53facdd520490e801192ab1d465a81f.svg" alt="\beta_0 \tilde d_0 = \gamma_0 \quad\quad \beta_0\tilde d_1 = \gamma_1 - \gamma_0\beta_1/\beta_0
 \quad\quad \cdots"/></p>
-</div><p>and again <img class="math" src="_images/math/e79a0a1a3445ad1ebaa83ba3835e78196876e90b.svg" alt="N_m"/> is chosen large enough to give the desired
-accuracy (<img class="math" src="_images/math/3ea1aee4acba5795b4799ab2dd85c55592686483.svg" alt="N_m=25"/> by default). Integrating, we get a closed-form
-result for <img class="math" src="_images/math/c524e5db9a68f7a463fd4d44a21f51551de3c380.svg" alt="m(\mu)"/> in terms of <img class="math" src="_images/math/b0e1634d3f8ee7b6a7d69ce22ea5929b8f8083a8.svg" alt="m_0"/> and <img class="math" src="_images/math/7e223e945b55eee744a8f7d6d673ebc15392c6b4.svg" alt="\alpha_s"/>:</p>
+</div><p>and again <img class="math" src="_images/math/f38bd68d27eb81e180791910056931dab319f736.svg" alt="N_m"/> is chosen large enough to give the desired
+accuracy (<img class="math" src="_images/math/cb627a2477b1a4b59497c01d41d52b9a0c3e41d1.svg" alt="N_m=25"/> by default). Integrating, we get a closed-form
+result for <img class="math" src="_images/math/4628329b815731b738fcad173eda5a0df658beff.svg" alt="m(\mu)"/> in terms of <img class="math" src="_images/math/1a9159b2e7ff61697f6fe5c59091e9b4f374b238.svg" alt="m_0"/> and <img class="math" src="_images/math/1109d83af8fbefaf7eeb83ad86b6bbd28061b269.svg" alt="\alpha_s"/>:</p>
 <div class="math">
-<p><img src="_images/math/8e26eaedf15353829196fb6863a75dc8a5d02496.svg" alt="\frac{m(\mu)}{m_0}
+<p><img src="_images/math/190068986edc4d19744ccca47b0075715cd1f21d.svg" alt="\frac{m(\mu)}{m_0}
 = \bigg(\frac{\alpha_s(\mu)}{\alpha_s(\mu_0)}\bigg)^{\tilde d_0}
 \exp\bigg(\sum\limits_{n=1}^{N_m}\frac{\tilde d_{n}}{n}\big(\alpha_s^n(\mu) - \alpha_s^n(\mu_0)\big)\bigg)"/></p>
 </div><p>This is very fast to evaluate given values for the coupling.</p>
-<p>Heavy quarks can be removed or added to the vacuum polarization assumed in <img class="math" src="_images/math/c524e5db9a68f7a463fd4d44a21f51551de3c380.svg" alt="m(\mu)"/>,
+<p>Heavy quarks can be removed or added to the vacuum polarization assumed in <img class="math" src="_images/math/4628329b815731b738fcad173eda5a0df658beff.svg" alt="m(\mu)"/>,
 analogously to the coupling.</p>
 </section>
 <section id="power-series">
-<h2>Power Series<a class="headerlink" href="#power-series" title="Permalink to this heading">¶</a></h2>
-<p>Calculating parameters like the <img class="math" src="_images/math/8f1308a7c1b69d9046a212b163c4265bba43bdb5.svg" alt="d_n"/> above (and manipulating perturbation
+<h2>Power Series<a class="headerlink" href="#power-series" title="Link to this heading">¶</a></h2>
+<p>Calculating parameters like the <img class="math" src="_images/math/9f7e0fff135b23662ddc9fc87391fbe92b0f398d.svg" alt="d_n"/> above (and manipulating perturbation
 series more generally) is done using the
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">gvar.powerseries</span></code> module:</p>
 <p><a class="reference external" href="https://gvar.readthedocs.io/en/latest/gvar_other.html?highlight=powerseries#module-gvar.powerseries">https://gvar.readthedocs.io/en/latest/gvar_other.html?highlight=powerseries#module-gvar.powerseries</a></p>
@@ -191,7 +188,7 @@ series more generally) is done using the
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -199,7 +196,7 @@ series more generally) is done using the
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
@@ -220,13 +217,13 @@ series more generally) is done using the
         <li class="right" >
           <a href="tutorial.html" title="Overview and Tutorial"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">qcdevol 4.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Implementation</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, G. P. Lepage.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    &#169; Copyright 2023, G. P. Lepage.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     </div>
   </body>
 </html>

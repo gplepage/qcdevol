@@ -27,17 +27,7 @@ perturbation series (in alpha_s).
 
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-try:
-    import sys
 
-    if sys.version_info >= (3, 8):
-        from importlib import metadata
-    else:
-        import importlib_metadata as metadata
-    __version__ = metadata.version('qcdevol')
-except:
-    # less precise default if fail
-    __version__ = '>=4.0'
-
+from ._version import __version__
 from .qcdevol import *
 

@@ -1,10 +1,5 @@
-include makefile READ.rst INSTALLATION.txt COPYING MANIFEST.in CHANGES.txt LICENSE.txt
-include setup.py setup.cfg pyproject.toml src/qcdevol/*.py  
-include .readthedocs.yaml
-graft doc/html
-graft tests 
-recursive-exclude tests/__pycache__ *
-recursive-exclude doc/_build *
+include makefile READ.txt LICENSE.txt INSTALLATION.txt make_version.py
+include setup.py setup.cfg pyproject.toml 
 exclude src/*.egg-info
 exclude build
-exclude tests/*.pyc
+exclude src/dummy/*.c

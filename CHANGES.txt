@@ -1,3 +1,7 @@
+Version 4.1 2025-03-10
+=======================
+Adds qcdevol.evol_xips.
+
 Version 4.0.2 2023-05-11
 ========================
 Fixes .readthedocs.yaml so that online documentation works.

@@ -330,6 +330,11 @@ of ``al(2)`` is given by ``zps_mu``.  The coefficients get quite large in
 ``zps_mu(al(2))`` is quite accurate (compare with ``z(2)``). Higher orders
 are needed when ``mu/mu0`` becomes large or small.
 
+A variation on :func:`qcdevol.evol_ps`  is :func:`qcdevol.evol_xips` which is
+used for series whose coefficients depend upon some function ``xi(mu)`` rather 
+than ``mu`` directly. A common case is ``xi(mu) = mu/m(mu)`` where ``m(mu)``
+is a quark mass.
+
 More About Uncertainties
 ---------------------------
 As discussed above, parameters ``alpha0`` in :class:`Alpha_s` and ``m0`` in :class:`M_msb` 

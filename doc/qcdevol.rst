@@ -82,11 +82,13 @@ which are derived from :class:`qcdevol.OPZ`.
 
 Functions
 ------------
-The following function is used to evolve and manipulate perturbation 
+The following functions are used to evolve and manipulate perturbation 
 series:
 
 .. autofunction:: qcdevol.evol_ps 
 
+.. autofunction:: qcdevol.evol_xips
+    
 The default parameters for the beta function, mass 
 anomalous dimension, and matching formulas (adding and 
 deleting quarks) are obtained from the following functions:

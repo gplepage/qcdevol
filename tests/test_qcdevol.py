@@ -9,6 +9,8 @@ from scipy.interpolate import approximate_taylor_polynomial as tayl
 from numpy import pi
 import gvar.powerseries as ps
 
+qcd.HMIN = 0.
+
 def assert_allclose(a,b, rtol=None, atol=None):
     if rtol is None:
         rtol = 1e-9
@@ -414,17 +416,28 @@ class test_qcdevol(unittest.TestCase):
     def test_evol_ps(self):
         nf = 4
         mu0 = 1.
-        mu = 0.1
+        mu = 0.1 
         m0 = 5.
-        almu0_ps = ps.PowerSeries([0, 1], order=qcd.ORDER)
+        order = qcd.ORDER
+        almu0_ps = ps.PowerSeries([0, 1], order=order)
         almu_ps = qcd.evol_ps(almu0_ps, mu=mu, mu0=mu0, nf=nf)
-        mmu0_ps = ps.PowerSeries([m0], order=qcd.ORDER)
+        mmu0_ps = ps.PowerSeries([m0], order=order)
         mmu_ps = qcd.evol_ps(mmu0_ps, mu=mu, mu0=mu0, nf=nf, gamma=qcd.GAMMA_MSB(nf))
         # check
         al = qcd.Alpha_s(alpha0=0.1, mu0=mu0, nf=nf)
         assert_allclose(al(mu0), almu_ps(al(mu)))
         m = qcd.M_msb(m0=m0, mu0=mu0, alpha=al)
         assert_allclose(m(mu), mmu_ps(al(mu)))
+        # check against evol_xips
+        order = 10
+        almu0_ps = ps.PowerSeries([0, 1], order=order)
+        almu_ps = qcd.evol_ps(almu0_ps, mu=mu, mu0=mu0, nf=nf)
+        almu_xips = qcd.evol_xips(almu0_ps, xi=mu, xi0=mu0, nf=nf)
+        assert_allclose(almu_xips.c, almu_ps.c)
+        mmu0_ps = ps.PowerSeries([m0], order=order)
+        mmu_ps = qcd.evol_ps(mmu0_ps, mu=mu, mu0=mu0, nf=nf, gamma=qcd.GAMMA_MSB(nf))
+        mmu_xips = qcd.evol_xips(mmu0_ps, xi=mu, xi0=mu0, nf=nf, gamma=qcd.GAMMA_MSB(nf))
+        assert_allclose(mmu_xips.c, mmu_ps.c)
 
     def test_evol_ps_scheme(self):
         " evol_ps schemes "
@@ -439,6 +452,67 @@ class test_qcdevol(unittest.TestCase):
                 assert_allclose(al_msb.c[2:], 0, atol=1e-9)
             else:
                 assert_allclose(al_msb.c[2:len(c) + 2], c)
+
+    def test_evol_xips(self):
+        " evol_xips "
+        def exact(mu_mb, n):
+            """ pseudoscalar-pseudoscalar vac polarization (nf=nl=4, arXiv:0907.2117)
+
+            Returns 1/(n-4)th root of series (for N>4) after dividing through by the first 
+            coefficient.
+
+            Args:
+                mu_mb (float): mu/mb(mu)
+                n (int): moment
+
+            Returns: Perturbative coefficients (as (gv.gvar.powerseries) 
+                for the n-th moment at mu/mb(mu) = mu_mb and
+            """
+            Rn_coef = {}
+            Rn_coef[4] = { 
+                0: [1.3333333333],
+                1: [3.1111111111, 0.0],
+                2: [-0.14140200429, -6.4814814815, 0.],
+                3: [-4.2921768959, 3.5706564992, 13.503086420, 0.0],
+                }
+            Rn_coef[6] = {
+                0: [0.53333333333],
+                1: [2.0641975309, 1.0666666667],
+                2: [7.3054482939, 1.5909465021, -0.044444444444],
+                3: [6.8777326692, -7.7353046271, 0.55054869684, 0.032098765432],
+                }
+            Rn_coef[8] = {
+                0: [0.30476190476],
+                1: [1.2117107584, 1.2190476190],
+                2: [6.2206842117, 4.3372604350, 1.1682539683],
+                3: [16.223749101, 7.3256625778, 4.2523182442, -0.064902998236],
+                }
+            Rn_coef[10] = {
+                0: [0.20317460317],
+                1: [0.71275585790, 1.2190476190],
+                2: [4.5716739893, 4.8064419249, 2.3873015873],
+                3: [15.999289274, 15.323088273, 11.034476526, 1.4589065256],
+                }
+            if n not in Rn_coef:
+                raise ValueError(f'bad n: {n}')
+            L = (-2 * np.log(mu_mb)) ** np.arange(5)
+            coef = 4 * [0]
+            for i in Rn_coef[n]:
+                coef[i] = np.sum(L[:i+1] * Rn_coef[n][i]) / np.pi ** i
+            if n > 4:
+                rn = (gv.powerseries.PowerSeries(coef) / coef[0]) ** (1/(n-4.))
+            else:
+                rn = gv.powerseries.PowerSeries(coef) / coef[0]
+            return rn
+        
+        gamma = qcd.GAMMA_MSB(nf=4)
+        gamma_xi = [-0.5] + list(-gamma)
+        for n in [4, 6, 8, 10]:
+            ps0 = exact(1, n=n)
+            for mu_mb in [.5, 0.67, 1., 1.5, 2.0]:
+                ps = qcd.evol_xips(ps0, xi=mu_mb, xi0=1, nf=4, gamma=gamma if n>4 else None, gamma_xi=gamma_xi)
+                ex = exact(mu_mb, n)
+                assert np.allclose(ps.c, ex.c), f'{n} {ps.c / ex.c}'
 
     def test_Alphas_Mmsb(self):
         mu = 10.
