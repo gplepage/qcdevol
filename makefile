@@ -44,6 +44,9 @@ coverage:
 
 sdist:          # source distribution
 	$(PYTHON) setup.py sdist
+	pip wheel .
+	mv qcdevol*whl dist/
+	rm *.whl
 
 
 upload-twine: $(CYTHONFILES)
