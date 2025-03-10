@@ -43,7 +43,7 @@ coverage:
 	pytest --cov-report term-missing --cov=qcdevol tests/
 
 sdist:          # source distribution
-    $(PYTHON) setup.py sdist
+	$(PYTHON) setup.py sdist
 
 
 upload-twine: $(CYTHONFILES)
