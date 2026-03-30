@@ -41,11 +41,10 @@ coverage:
 	pytest --cov-report term-missing --cov=qcdevol tests/
 
 sdist:          # source distribution
-	$(PYTHON) setup.py sdist
-	pip wheel .
-	mv qcdevol*whl dist/
-	rm *.whl
+	$(PYTHON) -m build --sdist
 
+swdist:
+	$(PYTHON) -m build
 
 upload-twine: $(CYTHONFILES)
 	twine upload dist/qcdevol-$(VERSION).tar.gz
