@@ -208,7 +208,7 @@ class test_qcdevol(unittest.TestCase):
     def test_alpha_qed(self):
         Qu = 2/3
         Qd = -1/3
-        alqed = 1/100.
+        alqed = 1/10.
         tmp = -alqed * 2 / (4*np.pi) ** 2
         tmp = {
             0:0, 
@@ -233,11 +233,26 @@ class test_qcdevol(unittest.TestCase):
                 self.assertEqual(al(1), al0(1))
             # with GVars
             ale = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf, alpha_qed=alqed * gv.gvar('1.0(1)'))
-            assert_allclose(ale(1).mean, al(1))
+            assert_allclose(ale(1).mean, al(1))        
+        # add & del quarks
+        for nf in [2, 3, 4]:
+            al0 = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf)
+            al = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf, alpha_qed=alqed)
+            al0p = al0.add_quark(m=1, mu=0.1)
+            alp = al.add_quark(m=1, mu=0.1)
+            alpalt = qcd.Alpha_s(alpha0=al0p(0.1), mu0=0.1, nf=nf + 1, alpha_qed=alqed)  
+            assert_allclose(alpalt(1), alp(1))
+        for nf in [2, 3, 4]:
+            al0 = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf)
+            al = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf, alpha_qed=alqed)
+            al0m = al0.del_quark(m=1, mu=0.1)
+            alm = al.del_quark(m=1, mu=0.1)
+            almalt = qcd.Alpha_s(alpha0=al0m(0.1), mu0=0.1, nf=nf - 1, alpha_qed=alqed) 
+            assert_allclose(alm(1.), almalt(1.)) 
 
     def test_msb_qed(self):
         Q = 1/3.
-        alqed = 1/100.
+        alqed = 1/10.
         mu0 = 4.
         m0 = 4.
         mu = 8
@@ -264,6 +279,30 @@ class test_qcdevol(unittest.TestCase):
         ale = qcd.Alpha_s(alpha0=.2, mu0=5., nf=4, alpha_qed=alqed * gv.gvar('1.0(1)'))
         me = qcd.M_msb(m0=4., mu0=4., alpha=ale, Q=Q)
         assert_allclose(m(8), me(8).mean)
+        # add & del quarks
+        for nf in [2, 3, 4]:
+            al0 = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf)
+            m0 = qcd.M_msb(m0=2, mu0=0.1, alpha=al0)
+            ale0 = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf, alpha_qed=alqed)
+            me0 = qcd.M_msb(m0=2, mu0=0.1, alpha=ale0, Q=2/3)
+            me0p = me0.add_quark(m=4, mu=0.1)
+            # ale0 = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf, alpha_qed=2 * alqed)
+            m0p = m0.add_quark(m=4, mu=0.1)
+            ale0p = ale0.add_quark(m=4, mu=0.1)
+            mep = qcd.M_msb(m0=m0p(0.1), mu0=0.1, alpha=ale0p, Q=2/3)
+            assert_allclose(mep(1), me0p(1))
+        for nf in [2, 3, 4]:
+            al0 = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf)
+            m0 = qcd.M_msb(m0=2, mu0=0.1, alpha=al0)
+            ale0 = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf, alpha_qed=alqed)
+            me0 = qcd.M_msb(m0=2, mu0=0.1, alpha=ale0, Q=2/3)
+            me0p = me0.del_quark(m=4, mu=0.1)
+            # ale0 = qcd.Alpha_s(alpha0=0.2, mu0=0.1, nf=nf, alpha_qed=2 * alqed)
+            m0p = m0.del_quark(m=4, mu=0.1)
+            ale0p = ale0.del_quark(m=4, mu=0.1)
+            mep = qcd.M_msb(m0=m0p(0.1), mu0=0.1, alpha=ale0p, Q=2/3)
+            assert_allclose(mep(1), me0p(1))
+
 
     def test_alpha_ps(self):
         mu0 = 1.
@@ -384,7 +423,7 @@ class test_qcdevol(unittest.TestCase):
         bad = 'x$y$z'
         with self.assertRaises(ValueError):
             qcd.Alpha_s(alpha0=1, mu0=1, nf=4, scheme=bad)
-        with self.assertRaises(ValueError):
+        with self.assertWarns(UserWarning):
             qcd.Alpha_s(alpha0=2., mu0=1, nf=4)
         al = qcd.Alpha_s(alpha0=0.2, mu0=5, nf=4)
         with self.assertRaises(ValueError):
@@ -406,11 +445,11 @@ class test_qcdevol(unittest.TestCase):
             qcd.evol_ps(ps, mu=(2, bad), mu0=1., nf=4)
         with self.assertRaises(RuntimeError):
             al(1e-6)
-        with self.assertRaises(RuntimeError):
+        with self.assertWarns(UserWarning):
             al(0.4)
         with self.assertRaises(RuntimeError):
             al([1e-6])
-        with self.assertRaises(RuntimeError):
+        with self.assertWarns(UserWarning):
             al([0.4])
 
     def test_evol_ps(self):

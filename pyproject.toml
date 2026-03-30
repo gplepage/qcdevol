@@ -1,3 +1,34 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=80.10.1"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "qcdevol"
+dynamic = ["version"]
+authors = [
+  { name="G. Peter Lepage", email="g.p.lepage@cornell.edu" },
+]
+description = "Evolution of QCD couplings, masses and other renormalization parameters."
+readme = "README.rst"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "GPL-3.0+"
+license-files = ["LICENSE.txt"]
+dependencies = [
+    "numpy>=1.24",
+    "gvar"
+]
+
+[project.urls]
+Homepage = "https://github.com/gplepage/qcdevol"
+Issues = "https://github.com/gplepage/qcdevol/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "qcdevol.__version__"} 
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

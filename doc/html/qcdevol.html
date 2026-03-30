@@ -339,12 +339,12 @@ an arithmetic expression involving parameter <code class="docutils literal notra
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">qcd</span><span class="o">.</span><span class="n">M_msb</span><span class="p">(</span><span class="n">m0</span><span class="o">=</span><span class="mf">4.513</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">al</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>             <span class="c1"># mu = mb(mu)</span>
 <span class="go">4.231289159789313</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="s1">&#39;3*m&#39;</span><span class="p">)</span>           <span class="c1"># mu = 3*mb(mu)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span><span class="p">(</span><span class="s1">&#39;3*m&#39;</span><span class="p">)</span>           <span class="c1"># returns mb(mu) where mu = 3 * mb(mu)</span>
 <span class="go">3.674028791373564</span>
 </pre></div>
 </div>
 <p>calculates <code class="docutils literal notranslate"><span class="pre">mb(mu)</span></code> first for <code class="docutils literal notranslate"><span class="pre">mu=mb(mu)</span></code> and then for
-<code class="docutils literal notranslate"><span class="pre">mu=mb(3*mu)</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">mu=3</span> <span class="pre">*</span> <span class="pre">mb(mu)</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -504,10 +504,10 @@ but evaluated at <code class="docutils literal notranslate"><span class="pre">xi
 specified by the values of the first four coefficients in the
 perturbative expansion. The anomalous dimension for this series
 is specified by <code class="docutils literal notranslate"><span class="pre">gamma_r</span></code>, while the anomalous dimension for
-<code class="docutils literal notranslate"><span class="pre">xi(mu)</span> <span class="pre">=</span> <span class="pre">mu/m(mu)``is</span> <span class="pre">specified</span> <span class="pre">by</span> <span class="pre">``gamma_xi</span></code>. (<code class="docutils literal notranslate"><span class="pre">m(mu)</span></code> is
+<code class="docutils literal notranslate"><span class="pre">xi(mu)</span> <span class="pre">=</span> <span class="pre">mu/m(mu)</span></code> is specified by <code class="docutils literal notranslate"><span class="pre">gamma_xi</span></code>. (<code class="docutils literal notranslate"><span class="pre">m(mu)</span></code> is
 a quark mass.)</p>
-<p>By default, <code class="docutils literal notranslate"><span class="pre">xi(mu)=mu</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma_xi=[-0.5]</span></code> when <code class="docutils literal notranslate"><span class="pre">gamma_xi</span> <span class="pre">is</span>
-<span class="pre">not</span> <span class="pre">specified.</span> <span class="pre">Then</span> <span class="pre">``evol_xips</span></code> becomes functionally equivalent to
+<p>By default, <code class="docutils literal notranslate"><span class="pre">xi(mu)=mu</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma_xi=[-0.5]</span></code> when <code class="docutils literal notranslate"><span class="pre">gamma_xi</span></code> is
+not specified. Then <code class="docutils literal notranslate"><span class="pre">evol_xips</span></code> becomes functionally equivalent to
 <code class="docutils literal notranslate"><span class="pre">evol_ps</span></code> but is typically slower than the latter. <code class="docutils literal notranslate"><span class="pre">evol_xips</span></code>
 can only be used with the MS-bar scheme.</p>
 <dl class="field-list simple">

@@ -174,8 +174,11 @@ class Alpha_s:
         if maxalpha is None:
             maxalpha = min(numpy.abs(numpy.polynomial.polynomial.Polynomial(self.beta_msb).roots()))
         self.maxalpha = maxalpha
-        if self.alpha0_msb > self.maxalpha or self.alpha0_msb <= 0:
-            raise ValueError(' bad alpha0_msb (not between 0 and maxalpha): {}'.format(self.alpha0_msb)) 
+        if self.alpha0_msb > self.maxalpha:
+            warnings.warn(' alpha0_msb larger than maxalpha: ' + str(self.alpha0_msb) + ' > ' + str(self.maxalpha))
+            self.alpha0_msb = self.maxalpha
+        elif self.alpha0_msb <= 0:
+            raise ValueError(' alpha0_msb less than zero: {}'.format(self.alpha0_msb)) 
         self.d = (
             1. / gvar.powerseries.PowerSeries(self.beta_msb / self.beta_msb[0], order=self.order)
             ).c[:]
@@ -279,7 +282,9 @@ class Alpha_s:
                     if al <= 0:
                         raise RuntimeError('alpha < 0; mu too small')
                     if al > self.maxalpha:
-                        raise RuntimeError('alpha > maxalpha: {} > {}'.format(al, self.maxalpha))
+                        warnings.warn('alpha > maxalpha: {} > {}'.format(al, self.maxalpha))
+                        al = self.maxalpha
+                        break
             if scheme != 'msb':
                 # convert alphamsb to scheme
                 n = numpy.arange(1, len(c) + 1)
@@ -315,7 +320,9 @@ class Alpha_s:
                     if numpy.any(al <= 0):
                         raise RuntimeError('alpha <= 0; mu too small')
                     if numpy.any(al > self.maxalpha):
-                        raise RuntimeError('alpha too large, perturbation theory failing: {} > {}'.format(al, self.maxalpha))
+                        warnings.warn('alpha too large, perturbation theory failing: {} > {}'.format(al, self.maxalpha))
+                        al[al > self.maxalpha] = self.maxalpha
+                        break
             if scheme != 'msb':
                 # convert alphamsb to scheme
                 n = numpy.arange(1, len(c) + 1)[:, None]
@@ -379,6 +386,7 @@ class Alpha_s:
         kargs['alpha0'] = alpha0 
         kargs['mu0'] = mu0 
         kargs['scheme'] = scheme
+        kargs['alpha_qed'] = self.alpha_qed
         if _mu0 is not None:
             al = Alpha_s(**kargs)
             kargs['alpha0'] = al(_mu0)
@@ -413,6 +421,7 @@ class Alpha_s:
         kargs['mu0'] = mu 
         kargs['nf'] = self.nf - 1
         kargs['scheme'] = 'msb'
+        kargs['alpha_qed'] = self.alpha_qed
         if self._beta_msb is not None:
             beta_msb = numpy.array(self._beta_msb) # make copy
             dbeta = (
@@ -457,6 +466,7 @@ class Alpha_s:
         kargs['mu0'] = mu 
         kargs['nf'] = self.nf + 1
         kargs['scheme'] = 'msb'
+        kargs['alpha_qed'] = self.alpha_qed
         if self._beta_msb is not None:
             beta_msb = numpy.array(self._beta_msb)   # copy
             dbeta = (
@@ -785,11 +795,11 @@ class M_msb(OPZ):
             >>> mb = qcd.M_msb(m0=4.513, mu0=3., alpha=al)
             >>> mb('m')             # mu = mb(mu)
             4.231289159789313
-            >>> mb('3*m')           # mu = 3*mb(mu)
+            >>> mb('3*m')           # returns mb(mu) where mu = 3 * mb(mu)
             3.674028791373564
 
         calculates ``mb(mu)`` first for ``mu=mb(mu)`` and then for 
-        ``mu=mb(3*mu)``.
+        ``mu=3 * mb(mu)``.
         """
         if isinstance(mu, str):
             # solve for implicit mu
@@ -843,6 +853,7 @@ class M_msb(OPZ):
         kargs['mu0'] = mu 
         kargs['alpha'] = self.alpha_msb.del_quark(m, mu)
         kargs['gamma_msb'] = gamma_msb
+        kargs['Q'] = self.Q
         return M_msb(**kargs)
 
 
@@ -893,6 +904,7 @@ class M_msb(OPZ):
         kargs['mu0'] = mu 
         kargs['alpha'] = alpha_new
         kargs['gamma_msb'] = gamma_msb
+        kargs['Q'] = self.Q
         return M_msb(**kargs)
 
 def evol_ps(pseries, mu, mu0, nf, gamma=None, beta_msb=None, order=None):
@@ -1058,10 +1070,10 @@ def evol_xips(pseries, xi, xi0, nf, gamma=None, gamma_xi=None, beta_msb=None, or
     specified by the values of the first four coefficients in the 
     perturbative expansion. The anomalous dimension for this series 
     is specified by ``gamma_r``, while the anomalous dimension for 
-    ``xi(mu) = mu/m(mu)``is specified by ``gamma_xi``. (``m(mu)`` is 
+    ``xi(mu) = mu/m(mu)`` is specified by ``gamma_xi``. (``m(mu)`` is 
     a quark mass.)
 
-    By default, ``xi(mu)=mu`` and ``gamma_xi=[-0.5]`` when ``gamma_xi is 
+    By default, ``xi(mu)=mu`` and ``gamma_xi=[-0.5]`` when ``gamma_xi`` is 
     not specified. Then ``evol_xips`` becomes functionally equivalent to
     ``evol_ps`` but is typically slower than the latter. ``evol_xips`` 
     can only be used with the MS-bar scheme.
@@ -1097,7 +1109,8 @@ def evol_xips(pseries, xi, xi0, nf, gamma=None, gamma_xi=None, beta_msb=None, or
     gamma_xi = gvar.powerseries.PowerSeries([-0.5] if gamma_xi is None else gamma_xi, order=order)
     if gamma_xi.c[0] == 0 or abs(gamma_xi.c[0]) < 1e-10 * max(gamma_xi.c ** 2) ** 0.5:
         raise ValueError(f'gamma_xi.c[0] is zero (or too small): {gamma_xi.c[0]}')
-    beta = gvar.powerseries.PowerSeries([0,0] + BETA_MSB(nf).tolist() if beta_msb is None else beta_msb, order=order)
+    beta_msb = BETA_MSB(nf).tolist() if beta_msb is None else numpy.asarray(beta_msb).tolist()
+    beta = gvar.powerseries.PowerSeries([0,0] + beta_msb, order=order)
     log_xi_xi0 = numpy.log(xi / xi0)
     def dpseries_dlogxi(xi, pseries_c):
         ps = gvar.powerseries.PowerSeries(pseries_c, order=order)

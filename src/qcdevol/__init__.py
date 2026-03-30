@@ -13,7 +13,7 @@ module, and these are propagated through the evolution. QED effects
 can be included. There are also tools for manipulating and evolving 
 perturbation series (in alpha_s).
 """
-#     Copyright (C) 2023 G. Peter Lepage
+#     Copyright (C) 2026 G. Peter Lepage
 
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ perturbation series (in alpha_s).
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from ._version import __version__
+__version__ = '4.1.1'
+
 from .qcdevol import *
 

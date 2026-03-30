@@ -1,3 +1,9 @@
+Version 4.1.1 2026-03-30
+========================
+Fixes bugs in add_quark() and del_quark() when alpha_qed is specified.
+
+Expanded pyproject.toml; removed setup.py and setup.cfg.
+
 Version 4.1 2025-03-10
 =======================
 Adds qcdevol.evol_xips.
